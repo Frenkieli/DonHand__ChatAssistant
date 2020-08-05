@@ -16,10 +16,14 @@ import cookieParser from 'cookie-parser';
 import createError from'http-errors';
 
 import indexRoutes from './routes/index';
+import lineBotRoutes from './routes/lineBot';
 
 
 
 const app = express();
+
+// app.use(express.json()); line的訊息必須在他上面去作解析不然會跳錯
+app.use('/lineBot', lineBotRoutes);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -39,7 +43,6 @@ app.use(express.static(path.join(__dirname, 'public')));
  * 
  */
 app.use('/', indexRoutes);
-// app.use('/mqtt', mqttRoutes);
 // app.use('/connect', connrctServerRoutes);
 // app.use('/location', locationRoutes);
 // app.use('/playscriptrecords', playscriptrecordsRoutes);
