@@ -3,23 +3,14 @@
  * @author frenkie
  * @date 2020-08-06
  */
-import { line, request, config, client, db } from './_import';
+import { request, config, client, db, fsItem } from './_import';
+import { getLineUserData } from './_lineEvent';
 
 
 export default function (event) {
   console.log('被跟隨發生');
   console.log(event);
-  var options = {
-    'method': 'GET',
-    'url': 'https://api.line.me/v2/bot/profile/' + event.source.userId,
-    'headers': {
-      'Authorization': 'Bearer ' + config.channelAccessToken,
-      'Content-Type': 'application/json',
-    },
-  };
-  request(options, function (error, response, body) {
-    if (error) throw new Error(error);
-    let data = JSON.parse(response.body);
+  getLineUserData(event.source.userId).then(data=>{
     data.following = true;
     console.log(data, '獲取用戶資料');
     let query = {
@@ -30,5 +21,13 @@ export default function (event) {
       text: data.displayName + '！！！感謝您的跟隨～！'
     });
     db.findOneAndUpdate('lineUsers', query, data);
-  });
+    let imgUrl = data.pictureUrl;
+    fsItem.downloadImage(imgUrl, data.userId, 'jpg', './dist/public/images/lineUser').then(res=>{
+      console.log('寫入圖片完成')
+    }).catch(err=>{
+      console.log('寫入lineUser圖片失敗:' + err)
+    });
+  }).catch(err=>{
+    console.log('獲取個人資料失敗:' + err)
+  })
 }

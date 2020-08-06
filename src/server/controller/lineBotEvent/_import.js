@@ -8,6 +8,7 @@ const line = require('@line/bot-sdk');
 const request = require('request');
 const config = require('./_lineBotConfig.json');
 const client = new line.Client(config);
+const fsItem = require("@@controller/fileController");
 import db from '@@models/mongoDB';
 
 export {
@@ -15,5 +16,6 @@ export {
   request,
   config,
   client,
-  db
+  db,
+  fsItem
 }

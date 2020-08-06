@@ -3,7 +3,7 @@
  * @author frenkie
  * @date 2020-08-06
  */
-import { line, request, config, client, db } from './_import';
+import { line, request, config, client, db, fsItem } from './_import';
 
 
 
