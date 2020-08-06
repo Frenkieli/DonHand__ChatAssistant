@@ -3,15 +3,34 @@
  * @author frenkie
  * @date 2020-08-06
  */
-const line = require('@line/bot-sdk');
-const request = require('request');
-const config = require('./lineBotConfig.json');
-const client = new line.Client(config);
-import db from '@@models/mongoDB';
 
+import follow from '@@controller/lineBotEvent/follow';
+import message from '@@controller/lineBotEvent/message';
+import unfollow from '@@controller/lineBotEvent/unfollow';
+
+let lineEvent = {
+  follow,
+  message,
+  unfollow,
+}
+
+/**
+ * @description lineEntry
+ * @author frenkie
+ * @date 2020-08-06
+ * @param {*} req
+ * @param {*} res
+ */
 function lineEntry(req, res) {
   Promise
-    .all(req.body.events.map(handleEvent))
+    .all(req.body.events.map(event=>{
+      if(lineEvent[event.type]) {
+        lineEvent[event.type](event)
+      }else{
+        console.log('line事件: ' + event.type + ' ,尚未建立')
+      }
+      return Promise.resolve(null);
+    }))
     .then((result) => {
       res.json(result)
     })
@@ -23,47 +42,4 @@ function lineEntry(req, res) {
 
 export default {
   lineEntry
-}
-
-function handleEvent(event) {
-  console.log(event);
-  switch (event.type) {
-    case 'unfollow':
-      console.log('跟隨發生結束')
-      let query = {
-        userId: event.source.userId
-      }
-      db.update('lineUsers', query, { following: false });
-      break;
-    case 'follow':
-      var options = {
-        'method': 'GET',
-        'url': 'https://api.line.me/v2/bot/profile/' + event.source.userId,
-        'headers': {
-          'Authorization': 'Bearer ' + config.channelAccessToken,
-          'Content-Type': 'application/json',
-        },
-      };
-      request(options, function (error, response, body) {
-        if (error) throw new Error(error);
-        let data = JSON.parse(response.body);
-        data.following = true;
-        console.log(data, '獲取用戶資料');
-        let query = {
-          userId: data.userId
-        }
-        db.findOneAndUpdate('lineUsers', query, data);
-      });
-      break;
-    case 'message':
-    case 'text':
-      // create a echoing text message
-      const echo = { type: 'text', text: event.message.text };
-      client.replyMessage(event.replyToken, echo);
-      // use reply API
-      break;
-    default:
-      break;
-  }
-  return Promise.resolve(null);
 }
