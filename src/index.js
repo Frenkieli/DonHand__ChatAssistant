@@ -4,8 +4,8 @@
  * @date 2020-08-05
  */
 
-import config from './config/config';
-import app from './server/express';
+import config from '@@config/config';
+import app from '@@/server/express';
 var debug = require('debug')('node.js-linebot_crawler:server');
 var http = require('http');
 

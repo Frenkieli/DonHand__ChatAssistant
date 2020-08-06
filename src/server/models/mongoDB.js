@@ -4,10 +4,10 @@
  * @date 2020-08-06
  */
 
-import schemaModels from './schemaModels';
+import schemaModels from '@@models/schemaModels';
 import moment from 'moment';
 import mongoose from 'mongoose';
-import config from '@@/config/config';
+import config from '@@config/config';
 
 /**
  * @description create new data

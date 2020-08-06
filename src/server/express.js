@@ -15,8 +15,8 @@ import cookieParser from 'cookie-parser';
 
 import createError from'http-errors';
 
-import indexRoutes from './routes/index';
-import lineBotRoutes from './routes/lineBot';
+import indexRoutes from '@@routes/index';
+import lineBotRoutes from '@@routes/lineBot';
 
 
 

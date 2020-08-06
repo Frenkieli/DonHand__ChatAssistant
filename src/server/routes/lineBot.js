@@ -5,7 +5,7 @@
  */
 import express from 'express';
 const router = express.Router();
-import controller from '@@/server/controller/lineBot'
+import controller from '@@controller/lineBot'
 
 const middleware = require('@line/bot-sdk').middleware;
 const config = require('./lineBotConfig.json');

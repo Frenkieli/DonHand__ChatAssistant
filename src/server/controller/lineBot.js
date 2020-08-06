@@ -7,7 +7,7 @@ const line = require('@line/bot-sdk');
 const request = require('request');
 const config = require('./lineBotConfig.json');
 const client = new line.Client(config);
-import db from '@@/server/models/mongoDB';
+import db from '@@models/mongoDB';
 
 function lineEntry(req, res) {
   Promise

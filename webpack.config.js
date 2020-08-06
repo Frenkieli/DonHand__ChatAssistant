@@ -44,6 +44,10 @@ const serverConfig = {
   resolve: {
     alias: {
       '@@': path.resolve('./src'),
+      '@@config': path.resolve('./src/config'),
+      '@@controller': path.resolve('./src/server/controller'),
+      '@@models': path.resolve('./src/server/models'),
+      '@@routes': path.resolve('./src/server/routes'),
     }
   },
 }
