@@ -13,7 +13,12 @@ console.log('=======================================================');
 let config = {
   version: '1.0.0',
   env: env,
-  port: '3000'
+  port: '3000',
+  db: {
+    host: '127.0.0.1',
+    port: 27017,
+    db: 'lineBot'
+  }
 };
 
 export default config;
