@@ -63,18 +63,56 @@ function downloadImage(url, fileName, type, path) {
   return new Promise((resolve, rejects) => {
     request({uri:url, encoding: 'binary'}, function(error, res, body){
       if (error) rejects(error);
-      checkDirExists(path).then(res=>{
-        fs.writeFile(path + '/' + fileName + '.' + type, body,　"binary", function(err,res){
-          if (err) rejects(err);
-          resolve(true);
-        })
-      }).catch(err=>{
-        console.log(err);
-      });
+      saveBufferImage(body, fileName, type, path);
     })
   })
 }
 
+
+/**
+ * @description save buffer data to image
+ * @author frenkie
+ * @date 2020-08-07
+ * @param {*} buffer
+ * @param {*} fileName
+ * @param {*} type
+ * @param {*} path
+ * @returns 
+ */
+function saveBufferImage(buffer, fileName, type, path) {
+  return new Promise((resolve, rejects) => {
+    checkDirExists(path).then(res=>{
+      fs.writeFile(path + '/' + fileName + '.' + type, buffer,　"binary", function(err,res){
+        if (err) rejects(err);
+        resolve(true);
+      })
+    }).catch(err=>{
+      console.log('儲存失敗:' + err);
+    });
+  })
+}
+
+/**
+ * @description save stream file to local
+ * @author frenkie
+ * @date 2020-08-07
+ * @param {String} fileName
+ * @param {String} type .jpg
+ * @param {String} path ./src/xxx
+ * @returns 
+ */
+function createWriteStream(fileName, type, path){
+  return new Promise((resolve, rejects) => {
+    checkDirExists(path).then(res=>{
+      resolve(fs.createWriteStream(path + '/' + fileName + '.' + type));
+    }).catch(err=>{
+      console.log('儲存失敗:' + err);
+    });
+  })
+}
+
 export {
-  downloadImage
+  downloadImage,
+  saveBufferImage,
+  createWriteStream
 }

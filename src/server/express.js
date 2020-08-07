@@ -62,5 +62,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+// 使用者狀態存在快取內，不要跟資料庫作以免有過多的溝通
+global.lineUserStates = {};
 export default app;

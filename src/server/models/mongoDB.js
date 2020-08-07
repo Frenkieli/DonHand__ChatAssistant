@@ -10,6 +10,30 @@ import mongoose from 'mongoose';
 import config from '@@config/config';
 
 /**
+ * @description find one data with query
+ * @author frenkie
+ * @date 2020-08-07
+ * @param {String} CollectionName
+ * @param {Object} query
+ * @returns 
+ */
+function findOneQuery(CollectionName, query){
+  return new Promise(function (resolve, reject) {
+    var dbModel = schemaModels[CollectionName];
+    if (dbModel) {
+      dbModel.findOne(query, function (err, docs) {
+        resolve(checkDocs(err, docs));
+      });
+    } else {
+      reject(null)
+    };
+  }).catch(err => {
+    console.error(err);
+  })
+}
+
+
+/**
  * @description create new data
  * @author frenkie
  * @date 2020-08-06
@@ -104,6 +128,7 @@ function update(CollectionName, findObject, updateObject) {
 
 
 export default {
+  findOneQuery,
   create,
   findOneAndUpdate,
   update

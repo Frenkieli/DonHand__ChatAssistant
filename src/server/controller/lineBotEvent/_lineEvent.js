@@ -23,7 +23,7 @@ function getLineUserData(userId) {
       },
     };
     request(options, function (error, response) {
-      if (error){
+      if (error) {
         reject(error)
       };
       let data = JSON.parse(response.body);
@@ -32,6 +32,35 @@ function getLineUserData(userId) {
   })
 }
 
+
+/**
+ * @description get line images
+ * @author frenkie
+ * @date 2020-08-07
+ * @param {String} messageId
+ * @param {String} name
+ * @param {String} type .jpg
+ * @param {String} path ./ src/xxx
+ * @returns 
+ */
+function getLineMessageImages(messageId, name, type, path) {
+  return new Promise((resolve, reject) => {
+    client.getMessageContent(messageId)
+    .then(async (stream) => {
+      let writable = await fsItem.createWriteStream(name, type, path);
+      stream.pipe(writable);
+      writable.on('finish', () => {
+        resolve(name + '.' + type)
+      });
+      stream.on('error', function(err){
+        console.log('串流line圖片失敗:' + err)
+        reject(err);
+      });
+    });
+  })
+}
+
 export {
-  getLineUserData
+  getLineUserData,
+  getLineMessageImages
 }
