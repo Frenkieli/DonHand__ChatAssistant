@@ -8,9 +8,8 @@ const router = express.Router();
 import controller from '@@controller/lineBot'
 
 const middleware = require('@line/bot-sdk').middleware;
-const config = require('./lineBotConfig.json');
-
-router.post('/', middleware(config), controller.lineEntry);
+import config from '@@config/config';
+router.post('/', middleware(config.line), controller.lineEntry);
 
 
 

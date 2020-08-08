@@ -6,6 +6,8 @@
 import { line, request, config, client, db, fsItem } from './_import';
 import { getLineMessageImages } from './_lineEvent';
 
+let serverIP = config.serverIP;
+
 export default async function (event) {
   console.log('訊息事件發生');
   console.log(event);
@@ -44,14 +46,15 @@ export default async function (event) {
           break;
         case 'jpg':
           let memeResult = await db.findOneQuery('memeImages', {memeName : fileStr});
+          console.log(memeResult, 'memeResult')
           if(memeResult){
             replyMessage = {
               type: 'image',
-              originalContentUrl: 'https://f8f01457a92e.ngrok.io/images/userMeme/' + memeResult.fileName + '.jpg',
-              previewImageUrl: 'https://f8f01457a92e.ngrok.io/images/userMeme/' + memeResult.fileName + '.jpg'
+              originalContentUrl: serverIP + 'images/userMeme/' + memeResult.fileName + '.jpg',
+              previewImageUrl: serverIP + 'images/userMeme/' + memeResult.fileName + '.jpg'
             }
           }else{
-            replyMessage = { type: 'text', text: '"' + message + '.jpg"不存在喔！為我們新增？'};
+            replyMessage = { type: 'text', text: '"' + fileStr + '.jpg"不存在喔！為我們新增？'};
           }
           break
         default:
@@ -65,8 +68,8 @@ export default async function (event) {
           replyMessage = [
             { 
               type: 'image',
-              originalContentUrl: 'https://f8f01457a92e.ngrok.io/images/userMeme/' + res,
-              previewImageUrl: 'https://f8f01457a92e.ngrok.io/images/userMeme/' + res 
+              originalContentUrl: serverIP + 'images/userMeme/' + res,
+              previewImageUrl: serverIP + 'images/userMeme/' + res 
             },
             { type: 'text', text: '梗圖"' + global.lineUserStates[event.source.userId].memeName + '.jpg"上傳完成'}
           ]

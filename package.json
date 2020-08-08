@@ -6,7 +6,7 @@
   "scripts": {
     "start:watch": "webpack -d -w",
     "start:server": "nodemon dist/index.bundle.js",
-    "start": "concurrently npm:start:*"
+    "start": "node dist/index.bundle.js"
   },
   "repository": {
     "type": "git",

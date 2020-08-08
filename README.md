@@ -10,3 +10,6 @@
     "channelSecret": ""
   }
 ```
+
+部屬
+git push heroku master

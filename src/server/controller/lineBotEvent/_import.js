@@ -6,8 +6,8 @@
 
 const line = require('@line/bot-sdk');
 const request = require('request');
-const config = require('./_lineBotConfig.json');
-const client = new line.Client(config);
+import config from '@@config/config';
+const client = new line.Client(config.line);
 const fsItem = require("@@controller/fileController");
 import db from '@@models/mongoDB';
 

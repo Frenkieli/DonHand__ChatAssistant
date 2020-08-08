@@ -18,7 +18,13 @@ let config = {
     host: '127.0.0.1',
     port: 27017,
     db: 'lineBot'
-  }
+  },
+  line: {
+    channelAccessToken: process.env.donkey_lineChannelAccessToken,
+    channelSecret: process.env.donkey_lineChannelSecret
+  },
+  // 現在測試和線上部屬有固定IP的設定
+  serverIP: process.env.serverIP ? process.env.serverIP : 'https://db0382e30b05.ngrok.io/'
 };
 
 export default config;
