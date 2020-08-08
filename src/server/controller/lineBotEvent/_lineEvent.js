@@ -18,7 +18,7 @@ function getLineUserData(userId) {
       'method': 'GET',
       'url': 'https://api.line.me/v2/bot/profile/' + userId,
       'headers': {
-        'Authorization': 'Bearer ' + config.channelAccessToken,
+        'Authorization': 'Bearer ' + config.line.channelAccessToken,
         'Content-Type': 'application/json',
       },
     };
