@@ -164,4 +164,4 @@ function checkDocs(err, docs) {
 }
 
 console.log(config.db);
-mongoose.connect(`mongodb://${config.db.host}:${config.db.port}/${config.db.db}`, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+mongoose.connect(config.mongoDB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });

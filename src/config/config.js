@@ -24,7 +24,8 @@ let config = {
     channelSecret: process.env.donkey_lineChannelSecret
   },
   // 現在測試和線上部屬有固定IP的設定
-  serverIP: process.env.serverIP ? process.env.serverIP : 'https://db0382e30b05.ngrok.io/'
+  serverIP: process.env.serverIP ? process.env.serverIP : 'https://db0382e30b05.ngrok.io/',
 };
+config.mongoDB = process.env.mongoDB ? process.env.mongoDB : `mongodb://${config.db.host}:${config.db.port}/${config.db.db}`;
 
 export default config;
