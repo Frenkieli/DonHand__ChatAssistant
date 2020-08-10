@@ -10,6 +10,8 @@
     "channelSecret": ""
   }
 ```
+系統變數
+heroku config:set KEY=value 
 
 部屬
 git push heroku master

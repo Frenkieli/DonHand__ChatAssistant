@@ -66,7 +66,7 @@ export default async function (event) {
       if(global.lineUserStates[event.source.userId] && global.lineUserStates[event.source.userId].type === 'meme'){
         let imageName = 'meme-' + event.source.userId + '-' + (Math.floor(Math.random() * 99999));
         // 這邊不處理線下的圖片的原因是會消耗效能，因為heroku的設定會定期將非本體的檔案清除所以並不需要另外浪費效能去作這件事
-        getLineMessageImages(event.message.id, imageName, 'jpg', './dist/public/images/userMeme').then(res=>{
+        getLineMessageImages(event.message.id, imageName, 'jpg', './').then(res=>{
           request({
             method : 'post',
             url : 'https://api.imgur.com/3/upload',
@@ -76,7 +76,7 @@ export default async function (event) {
             formData: {
               'type': 'file',
               'image': {
-                'value': fs.createReadStream('./dist/public/images/userMeme/' + imageName + '.jpg'),
+                'value': fs.createReadStream('./' + imageName + '.jpg'),
                 'options': {
                   'filename': imageName + '.jpg',
                   'contentType': null
