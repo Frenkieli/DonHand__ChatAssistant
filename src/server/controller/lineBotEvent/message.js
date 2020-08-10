@@ -5,6 +5,7 @@
  */
 import { line, request, config, client, db, fsItem } from './_import';
 import { getLineMessageImages } from './_lineEvent';
+const fs = require("fs");
 
 let serverIP = config.serverIP;
 
@@ -35,7 +36,7 @@ export default async function (event) {
         case '.meme':
           let checkMemeResult = await db.findOneQuery('memeImages', {memeName : message});
           if(!checkMemeResult){
-            replyMessage = { type: 'text', text: '請為"' + message + '.jpg"上傳對應的圖片，請注意違反法律的圖片會被抓喔！'};
+            replyMessage = { type: 'text', text: '請為"' + message + '.jpg"上傳對應的圖片，這張圖片每個人都看的到喔！注意不要上傳私人照片或是為違法照片。'};
             global.lineUserStates[event.source.userId] = {
               type: 'meme',
               memeName: message
@@ -50,8 +51,8 @@ export default async function (event) {
           if(memeResult){
             replyMessage = {
               type: 'image',
-              originalContentUrl: serverIP + 'images/userMeme/' + memeResult.fileName + '.jpg',
-              previewImageUrl: serverIP + 'images/userMeme/' + memeResult.fileName + '.jpg'
+              originalContentUrl: memeResult.fileUrl,
+              previewImageUrl: memeResult.fileUrl
             }
           }else{
             replyMessage = { type: 'text', text: '"' + fileStr + '.jpg"不存在喔！為我們新增？'};
@@ -64,22 +65,49 @@ export default async function (event) {
     case 'image':
       if(global.lineUserStates[event.source.userId] && global.lineUserStates[event.source.userId].type === 'meme'){
         let imageName = 'meme-' + event.source.userId + '-' + (Math.floor(Math.random() * 99999));
-        await getLineMessageImages(event.message.id, imageName, 'jpg', './dist/public/images/userMeme').then(res=>{
-          replyMessage = [
-            { 
-              type: 'image',
-              originalContentUrl: serverIP + 'images/userMeme/' + res,
-              previewImageUrl: serverIP + 'images/userMeme/' + res 
+        // 這邊不處理線下的圖片的原因是會消耗效能，因為heroku的設定會定期將非本體的檔案清除所以並不需要另外浪費效能去作這件事
+        getLineMessageImages(event.message.id, imageName, 'jpg', './dist/public/images/userMeme').then(res=>{
+          request({
+            method : 'post',
+            url : 'https://api.imgur.com/3/upload',
+            headers :{
+              Authorization: 'Client-ID ' + config.imgur.clientID
             },
-            { type: 'text', text: '梗圖"' + global.lineUserStates[event.source.userId].memeName + '.jpg"上傳完成'}
-          ]
-          db.create('memeImages', {
-            userId : event.source.userId,
-            memeName : global.lineUserStates[event.source.userId].memeName,
-            fileName : imageName,
+            formData: {
+              'type': 'file',
+              'image': {
+                'value': fs.createReadStream('./dist/public/images/userMeme/' + imageName + '.jpg'),
+                'options': {
+                  'filename': imageName + '.jpg',
+                  'contentType': null
+                }
+              },
+              'name': imageName + '.jpg'
+            }
+          }, function(error, res){
+            if (error) throw new Error(error);
+            let imgurData = JSON.parse(res.body).data;
+            replyMessage = [
+              { 
+                type: 'image',
+                originalContentUrl: imgurData.link,
+                previewImageUrl: imgurData.link 
+              },
+              { type: 'text', text: '梗圖"' + global.lineUserStates[event.source.userId].memeName + '.jpg"上傳完成'}
+            ]
+            db.create('memeImages', {
+              userId : event.source.userId,
+              memeName : global.lineUserStates[event.source.userId].memeName,
+              fileUrl : imgurData.link,
+              deletehash : imgurData.deletehash
+            })
+            delete global.lineUserStates[event.source.userId];
+            client.replyMessage(event.replyToken, replyMessage).catch(err => {
+              console.log('回覆line錯誤:' + err)
+            });
           })
-          delete global.lineUserStates[event.source.userId];
         }).catch(err=>{
+          console.log('上傳失敗:' + err);
           replyMessage = { type: 'text', text: '梗圖"' + global.lineUserStates[event.source.userId].memeName + '.jpg"上傳失敗'}
           delete global.lineUserStates[event.source.userId];
         })

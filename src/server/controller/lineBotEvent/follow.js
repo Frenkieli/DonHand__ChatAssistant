@@ -21,12 +21,6 @@ export default function (event) {
       text: data.displayName + '！！！感謝您的跟隨～！'
     });
     db.findOneAndUpdate('lineUsers', query, data);
-    let imgUrl = data.pictureUrl;
-    fsItem.downloadImage(imgUrl, data.userId, 'jpg', './dist/public/images/lineUser').then(res=>{
-      console.log('寫入圖片完成')
-    }).catch(err=>{
-      console.log('寫入lineUser圖片失敗:' + err)
-    });
   }).catch(err=>{
     console.log('獲取個人資料失敗:' + err)
   })

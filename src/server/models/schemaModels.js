@@ -24,7 +24,8 @@ lineUserSchema.index({userId: 1});
 const memeImagesSchema = mongoose.Schema({
   userId                : { type: String, required: true },
   memeName              : { type: String, required: true },
-  fileName              : { type: String, required: true },
+  fileUrl               : { type: String, required: true },
+  deletehash            : { type: String, required: true },  // 用來刪除imgur上的圖片
   time                  : { type: Number, required: true, default:moment().valueOf()},
 },{
   timestamps: { updatedAt: 'updateTime' }

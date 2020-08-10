@@ -23,8 +23,12 @@ let config = {
     channelAccessToken: process.env.donkey_lineChannelAccessToken,
     channelSecret: process.env.donkey_lineChannelSecret
   },
+  imgur: {
+    clientID : process.env.donkey_lineImgurClientID,
+    clientSecret : process.env.donkey_lineClientSecret,
+  },
   // 現在測試和線上部屬有固定IP的設定
-  serverIP: process.env.serverIP ? process.env.serverIP : 'https://db0382e30b05.ngrok.io/',
+  serverIP: process.env.serverIP ? process.env.serverIP : 'https://6f2c3ec98369.ngrok.io/',
 };
 config.mongoDB = process.env.mongoDB ? process.env.mongoDB : `mongodb://${config.db.host}:${config.db.port}/${config.db.db}`;
 
