@@ -13,8 +13,7 @@ const serverConfig = {
   },
   externals: [nodeExternals()],
   entry: {
-    'index': path.join(__dirname, 'src/index.js'),
-    // 'public/javascripts/temibroad': './src/client/typescript/temibroad/temibroad.ts'
+    'index': path.join(__dirname, 'src/index.ts')
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -27,7 +26,12 @@ const serverConfig = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: 'babel-loader'
-      }
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
     ],
   },
   plugins: [
@@ -42,6 +46,7 @@ const serverConfig = {
     minimize: true,
   },
   resolve: {
+    extensions: ['.ts', '.js'],
     alias: {
       '@@': path.resolve('./src'),
       '@@config': path.resolve('./src/config'),

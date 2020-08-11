@@ -3,7 +3,6 @@
  * @author frenkie
  * @date 2020-08-06
  */
-
 import schemaModels from '@@models/schemaModels';
 import moment from 'moment';
 import mongoose from 'mongoose';
@@ -17,11 +16,12 @@ import config from '@@config/config';
  * @param {Object} query
  * @returns 
  */
-function findOneQuery(CollectionName, query){
+
+function findOneQuery(CollectionName: any, query: any){
   return new Promise(function (resolve, reject) {
     var dbModel = schemaModels[CollectionName];
     if (dbModel) {
-      dbModel.findOne(query, function (err, docs) {
+      dbModel.findOne(query, function (err: any, docs: any) {
         resolve(checkDocs(err, docs));
       });
     } else {
@@ -41,11 +41,11 @@ function findOneQuery(CollectionName, query){
  * @param {Object} insertObject create object
  * @returns 
  */
-function create(CollectionName, insertObject) {
+function create(CollectionName: any, insertObject: any) {
   return new Promise(function (resolve, reject) {
     var dbModel = schemaModels[CollectionName];
     if (dbModel) {
-      dbModel.create(insertObject, function (err, docs) {
+      dbModel.create(insertObject, function (err:any, docs:any) {
         resolve(checkDocs(err, docs));
       });
     } else {
@@ -71,9 +71,9 @@ function create(CollectionName, insertObject) {
  * @returns 
  */
 function findOneAndUpdate(
-  CollectionName,
-  findObject,
-  insertObject,
+  CollectionName : any,
+  findObject : any,
+  insertObject : any,
   opts = {
     new: true,
     upsert: true,
@@ -88,7 +88,7 @@ function findOneAndUpdate(
         returnNewDocument: opts.returnNewDocument,//false: 不回傳更新資料,    true: 回傳更新資料.
         useFindAndModify: false
       },
-        function (err, docs) {
+        function (err : any, docs : any) {
           if (err) {
             console.log('findOneAndUpdateNew: ', err);
           }
@@ -109,11 +109,11 @@ function findOneAndUpdate(
  * @param {Object} insertObject create object
  * @returns 
  */
-function update(CollectionName, findObject, updateObject) {
+function update(CollectionName : any, findObject : any, updateObject : any) {
   return new Promise(function (resolve, reject) {
     var dbModel = schemaModels[CollectionName];
     if (dbModel) {
-      dbModel.updateOne(findObject, updateObject, function (err, docs) {
+      dbModel.updateOne(findObject, updateObject, function (err : any, docs : any) {
         if (err) {
           console.log('update error: ', CollectionName, findObject, updateObject);
         }
@@ -143,7 +143,7 @@ export default {
  * @param {*} docs
  * @returns 
  */
-function checkDocs(err, docs) {
+function checkDocs(err : any, docs : any) {
   if (err) {
     console.log('DB err:', err.toString());
     console.error(err);

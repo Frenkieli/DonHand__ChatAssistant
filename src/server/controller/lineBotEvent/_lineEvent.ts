@@ -12,7 +12,7 @@ import { line, request, config, client, db, fsItem } from './_import';
  * @param {*} userId
  * @returns 
  */
-function getLineUserData(userId) {
+let getLineUserData = function(userId: any) {
   return new Promise((resolve, reject) => {
     var options = {
       'method': 'GET',
@@ -22,7 +22,7 @@ function getLineUserData(userId) {
         'Content-Type': 'application/json',
       },
     };
-    request(options, function (error, response) {
+    request(options, function (error: any, response: any) {
       if (error) {
         reject(error)
       };
@@ -43,16 +43,16 @@ function getLineUserData(userId) {
  * @param {String} path ./ src/xxx
  * @returns 
  */
-function getLineMessageImages(messageId, name, type, path) {
+let getLineMessageImages = function (messageId: any, name: any, type: any, path: any) {
   return new Promise((resolve, reject) => {
     client.getMessageContent(messageId)
-    .then(async (stream) => {
+    .then(async (stream: any) => {
       let writable = await fsItem.createWriteStream(name, type, path);
       stream.pipe(writable);
       writable.on('finish', () => {
         resolve(name + '.' + type)
       });
-      stream.on('error', function(err){
+      stream.on('error', function(err: any){
         console.log('串流line圖片失敗:' + err)
         reject(err);
       });

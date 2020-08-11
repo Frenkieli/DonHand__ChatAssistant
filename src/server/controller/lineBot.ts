@@ -8,7 +8,7 @@ import follow from '@@controller/lineBotEvent/follow';
 import message from '@@controller/lineBotEvent/message';
 import unfollow from '@@controller/lineBotEvent/unfollow';
 
-let lineEvent = {
+let lineEvent : any = {
   follow,
   message,
   unfollow,
@@ -21,9 +21,9 @@ let lineEvent = {
  * @param {*} req
  * @param {*} res
  */
-function lineEntry(req, res) {
+function lineEntry(req : any, res : any) {
   Promise
-    .all(req.body.events.map(event=>{
+    .all(req.body.events.map((event:any)=>{
       if(lineEvent[event.type]) {
         lineEvent[event.type](event)
       }else{

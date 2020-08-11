@@ -7,7 +7,7 @@ import { db } from './_import';
 
 
 
-export default function (event) {
+export default function (event: any) {
   console.log('取消跟隨發生');
   console.log(event);
   let query = {

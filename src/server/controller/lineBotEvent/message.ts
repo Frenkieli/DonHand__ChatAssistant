@@ -8,8 +8,8 @@ import { getLineMessageImages } from './_lineEvent';
 const fs = require("fs");
 
 let serverIP = config.serverIP;
-
-export default async function (event) {
+const globalAny:any = global;
+export default async function (event: any) {
   console.log('訊息事件發生');
   console.log(event);
   // use reply API
@@ -40,13 +40,13 @@ export default async function (event) {
             'headers': {
             }
           };
-          request(options, function (error, response) {
+          request(options, function (error: any, response: any) {
             if (error) throw new Error(error);
             let youtubeItems = JSON.parse(response.body).items;
             console.log(response.body, '獲取youtube結果');
             console.log(youtubeItems, 'youtubeItems');
-            let flexContents = [];
-            youtubeItems.forEach(v=>{
+            let flexContents : any = [];
+            youtubeItems.forEach((v: any)=>{
               flexContents.push({
                 "type": "bubble",
                 "hero": {
@@ -102,7 +102,7 @@ export default async function (event) {
                 }
               }
             console.log('replyMessage', replyMessage)
-            client.replyMessage(event.replyToken, replyMessage).catch(err => {
+            client.replyMessage(event.replyToken, replyMessage).catch((err: any) => {
               console.log('回覆line錯誤:' + err)
             });
           });
@@ -111,7 +111,7 @@ export default async function (event) {
           let checkMemeResult = await db.findOneQuery('memeImages', {memeName : message});
           if(!checkMemeResult){
             replyMessage = { type: 'text', text: '請為"' + message + '.jpg"上傳對應的圖片，這張圖片每個人都看的到喔！注意不要上傳私人照片或是為違法照片。'};
-            global.lineUserStates[event.source.userId] = {
+            globalAny.lineUserStates[event.source.userId] = {
               type: 'meme',
               memeName: message
             }
@@ -120,7 +120,7 @@ export default async function (event) {
           }
           break;
         case 'jpg':
-          let memeResult = await db.findOneQuery('memeImages', {memeName : fileStr});
+          let memeResult = await db.findOneQuery('memeImages', {memeName : fileStr}) as any;
           console.log(memeResult, 'memeResult')
           if(memeResult){
             replyMessage = {
@@ -137,7 +137,7 @@ export default async function (event) {
       }
       break;
     case 'image':
-      if(global.lineUserStates[event.source.userId] && global.lineUserStates[event.source.userId].type === 'meme'){
+      if(globalAny.lineUserStates[event.source.userId] && globalAny.lineUserStates[event.source.userId].type === 'meme'){
         let imageName = 'meme-' + event.source.userId + '-' + (Math.floor(Math.random() * 99999));
         // 這邊不處理線下的圖片的原因是會消耗效能，因為heroku的設定會定期將非本體的檔案清除所以並不需要另外浪費效能去作這件事
         getLineMessageImages(event.message.id, imageName, 'jpg', './').then(res=>{
@@ -158,7 +158,7 @@ export default async function (event) {
               },
               'name': imageName + '.jpg'
             }
-          }, function(error, res){
+          }, function(error: any, res: any){
             if (error) throw new Error(error);
             let imgurData = JSON.parse(res.body).data;
             replyMessage = [
@@ -167,23 +167,23 @@ export default async function (event) {
                 originalContentUrl: imgurData.link,
                 previewImageUrl: imgurData.link 
               },
-              { type: 'text', text: '梗圖"' + global.lineUserStates[event.source.userId].memeName + '.jpg"上傳完成'}
+              { type: 'text', text: '梗圖"' + globalAny.lineUserStates[event.source.userId].memeName + '.jpg"上傳完成'}
             ]
             db.create('memeImages', {
               userId : event.source.userId,
-              memeName : global.lineUserStates[event.source.userId].memeName,
+              memeName : globalAny.lineUserStates[event.source.userId].memeName,
               fileUrl : imgurData.link,
               deletehash : imgurData.deletehash
             })
-            delete global.lineUserStates[event.source.userId];
-            client.replyMessage(event.replyToken, replyMessage).catch(err => {
+            delete globalAny.lineUserStates[event.source.userId];
+            client.replyMessage(event.replyToken, replyMessage).catch((err: any) => {
               console.log('回覆line錯誤:' + err)
             });
           })
         }).catch(err=>{
           console.log('上傳失敗:' + err);
-          replyMessage = { type: 'text', text: '梗圖"' + global.lineUserStates[event.source.userId].memeName + '.jpg"上傳失敗'}
-          delete global.lineUserStates[event.source.userId];
+          replyMessage = { type: 'text', text: '梗圖"' + globalAny.lineUserStates[event.source.userId].memeName + '.jpg"上傳失敗'}
+          delete globalAny.lineUserStates[event.source.userId];
         })
       }
       break;
@@ -191,7 +191,7 @@ export default async function (event) {
       break;
   }
   if(replyMessage){
-    client.replyMessage(event.replyToken, replyMessage).catch(err => {
+    client.replyMessage(event.replyToken, replyMessage).catch((err: any) => {
       console.log('回覆line錯誤:' + err)
     });
   }

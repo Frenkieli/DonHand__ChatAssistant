@@ -53,7 +53,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function (err : any, req : any, res : any, next : any) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   console.log('出錯訊息:' + res.locals.message)
@@ -63,5 +63,7 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 // 使用者狀態存在快取內，不要跟資料庫作以免有過多的溝通
-global.lineUserStates = {};
+const globalAny:any = global;
+globalAny.lineUserStates = {};
+
 export default app;
