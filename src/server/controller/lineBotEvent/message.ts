@@ -27,9 +27,6 @@ export default async function (event: lineEvent) {
         message = messageSplit.join(' ');
       }
       var regex = new RegExp("^[\u4e00-\u9fa5_a-zA-Z0-9_][\u4e00-\u9fa5_a-zA-Z0-9_ ][\u4e00-\u9fa5_a-zA-Z0-9_]*$");
-      if(!regex.test(message)){
-        console.log('要寫在觸發事件後去檢查然後退回驗證失敗');
-      }
       console.log(regex.test(message), {message, keyWord});
       switch (keyWord) {
         case '.h':
@@ -39,6 +36,11 @@ export default async function (event: lineEvent) {
           ];
           break;
         case '.y2b':
+          if(!regex.test(message)){
+            replyMessage = { type: 'text', text: '不好意思，我只看得懂中英文ㄟ，抱歉。'}
+            console.log('要寫在觸發事件後去檢查然後退回驗證失敗');
+            break;
+          }
           var request = require('request');
           let url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=8&q=' + encodeURI(message) +'&type=video&videoCategoryId=10&key=' + config.googleApiKey;
           console.log(url)
@@ -116,6 +118,11 @@ export default async function (event: lineEvent) {
           });
           break;
         case '.meme':
+          if(!regex.test(message)){
+            replyMessage = { type: 'text', text: '不好意思，我只看得懂中英文ㄟ，抱歉。'}
+            console.log('要寫在觸發事件後去檢查然後退回驗證失敗');
+            break;
+          }
           let checkMemeResult = await db.findOneQuery('memeImages', {memeName : message});
           if(!checkMemeResult){
             replyMessage = { type: 'text', text: '請為"' + message + '.jpg"上傳對應的圖片，這張圖片每個人都看的到喔！注意不要上傳私人照片或是為違法照片。'};
@@ -128,6 +135,11 @@ export default async function (event: lineEvent) {
           }
           break;
         case '.jpg':
+          if(!regex.test(message)){
+            replyMessage = { type: 'text', text: '不好意思，我只看得懂中英文ㄟ，抱歉。'}
+            console.log('要寫在觸發事件後去檢查然後退回驗證失敗');
+            break;
+          }
           let memeResult = await db.findOneQuery('memeImages', {memeName : message}) as any;
           console.log(memeResult, 'memeResult')
           if(memeResult){

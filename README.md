@@ -15,3 +15,9 @@ heroku config:set KEY=value
 
 部屬
 git push heroku master
+
+監看
+heroku logs --tail
+
+列舉
+heroku logs -n 200
