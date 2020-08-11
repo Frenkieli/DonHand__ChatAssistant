@@ -1,4 +1,4 @@
-///<reference path="./server/definition/schemaModels.d.ts" />
+///<reference path="./server/definition/index.d.ts" />
 
 /**
  * @description 伺服器進入點

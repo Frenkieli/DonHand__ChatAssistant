@@ -7,10 +7,10 @@ import { request, config, client, db, fsItem } from './_import';
 import { getLineUserData } from './_lineEvent';
 
 
-export default function (event : any) {
+export default function (event : lineEvent) {
   console.log('被跟隨發生');
   console.log(event);
-  getLineUserData(event.source.userId).then((data: any)=>{
+  getLineUserData(event.source.userId).then((data: lineUserData)=>{
     data.following = true;
     console.log(data, '獲取用戶資料');
     let query = {

@@ -11,14 +11,14 @@ const request = require('request');
  * @description create dir
  * @author frenkie
  * @date 2020-08-06
- * @param {*} path
+ * @param {String} path
  * @returns 
  */
-function checkDirExists(path : any){
+function checkDirExists(path : string){
   return new Promise((resolve, reject)=>{
     fs.exists(path, function(exists : any){
       if(!exists){
-         let mkDir = function (dirPath : any) : Promise<any>{
+         let mkDir = function (dirPath : string) : Promise<boolean | string>{
           return new Promise((resolve)=>{
             fs.exists(dirPath, function(exists:any){
               if(!exists){
@@ -35,7 +35,7 @@ function checkDirExists(path : any){
         }
         let dir = path.split('/');
         let dirPath = '';
-        dir.forEach(async (v : any ) => {
+        dir.forEach(async (v : string) => {
           dirPath += v +'/';
           await mkDir(dirPath);
         });
@@ -59,9 +59,9 @@ function checkDirExists(path : any){
  * @param {String} path ./aaa/bbb
  * @returns 
  */
-function downloadImage(url : any, fileName : any, type : any, path : any) {
+function downloadImage(url : string, fileName : string, type : string, path : string) {
   return new Promise((resolve, rejects) => {
-    request({uri:url, encoding: 'binary'}, function(error : any, res : any, body : any){
+    request({uri:url, encoding: 'binary'}, function(error : any, res : object, body : Buffer){
       if (error) rejects(error);
       saveBufferImage(body, fileName, type, path);
     })
@@ -73,13 +73,13 @@ function downloadImage(url : any, fileName : any, type : any, path : any) {
  * @description save buffer data to image
  * @author frenkie
  * @date 2020-08-07
- * @param {*} buffer
- * @param {*} fileName
- * @param {*} type
- * @param {*} path
+ * @param {Buffer} buffer
+ * @param {string} fileName
+ * @param {string} type
+ * @param {string} path
  * @returns 
  */
-function saveBufferImage(buffer : any, fileName : any, type : any, path : any) {
+function saveBufferImage(buffer : Buffer, fileName : string, type : string, path : string) {
   return new Promise((resolve, rejects) => {
     checkDirExists(path).then(res=>{
       fs.writeFile(path + '/' + fileName + '.' + type, buffer,　"binary", function(err: any,res: any){
@@ -101,7 +101,7 @@ function saveBufferImage(buffer : any, fileName : any, type : any, path : any) {
  * @param {String} path ./src/xxx
  * @returns 
  */
-function createWriteStream(fileName: any, type : any, path : any){
+function createWriteStream(fileName: string, type : string, path : string){
   return new Promise((resolve, rejects) => {
     checkDirExists(path).then(res=>{
       resolve(fs.createWriteStream(path + '/' + fileName + '.' + type));

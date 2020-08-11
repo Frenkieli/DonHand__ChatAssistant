@@ -7,19 +7,19 @@ import { line, request, config, client, db, fsItem } from './_import';
 import { getLineMessageImages } from './_lineEvent';
 const fs = require("fs");
 
-let serverIP = config.serverIP;
-const globalAny:any = global;
-export default async function (event: any) {
+const globalAny: any = global;
+
+export default async function (event: lineEvent) {
   console.log('訊息事件發生');
   console.log(event);
   // use reply API
   let replyMessage = null;
   switch (event.message.type) {
     case 'text':
-      let message = event.message.text.split(' ');
-      let keyWord = message.splice(0, 1)[0];
-      let fileStr = event.message.text.split('.');
-      let fileName = fileStr.splice(fileStr.length - 1, 1)[0];
+      let message: any = event.message.text.split(' ');
+      let keyWord: any = message.splice(0, 1)[0];
+      let fileStr: any = event.message.text.split('.');
+      let fileName: any = fileStr.splice(fileStr.length - 1, 1)[0];
       message = message.join(' ');
       fileStr = fileStr.join(' ');
       // console.log({ message, keyWord, fileName, fileStr })

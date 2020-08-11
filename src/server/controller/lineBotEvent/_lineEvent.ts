@@ -12,7 +12,7 @@ import { line, request, config, client, db, fsItem } from './_import';
  * @param {*} userId
  * @returns 
  */
-let getLineUserData = function(userId: any) {
+let getLineUserData = function(userId: string) : Promise<lineUserData> {
   return new Promise((resolve, reject) => {
     var options = {
       'method': 'GET',
@@ -43,7 +43,7 @@ let getLineUserData = function(userId: any) {
  * @param {String} path ./ src/xxx
  * @returns 
  */
-let getLineMessageImages = function (messageId: any, name: any, type: any, path: any) {
+let getLineMessageImages = function (messageId: string, name: string, type: string, path: string) : Promise<string> {
   return new Promise((resolve, reject) => {
     client.getMessageContent(messageId)
     .then(async (stream: any) => {
