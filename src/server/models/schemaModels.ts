@@ -31,7 +31,8 @@ const memeImagesSchema = new mongoose.Schema({
   timestamps: { updatedAt: 'updateTime' }
 });
 memeImagesSchema.index({memeName: 1});
-let schema : any = {
+
+const schema : SchemaMode = {
   lineUsers: mongoose.model('lineUsers', lineUserSchema, 'lineUsers'),
   memeImages: mongoose.model('memeImages', memeImagesSchema, 'memeImages')
 }

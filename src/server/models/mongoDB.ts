@@ -17,9 +17,9 @@ import config from '@@config/config';
  * @returns 
  */
 
-function findOneQuery(CollectionName: any, query: any){
+function findOneQuery(CollectionName: CollectionName, query: object){
   return new Promise(function (resolve, reject) {
-    var dbModel = schemaModels[CollectionName];
+    const dbModel = schemaModels[CollectionName];
     if (dbModel) {
       dbModel.findOne(query, function (err: any, docs: any) {
         resolve(checkDocs(err, docs));
@@ -41,11 +41,11 @@ function findOneQuery(CollectionName: any, query: any){
  * @param {Object} insertObject create object
  * @returns 
  */
-function create(CollectionName: any, insertObject: any) {
+function create(CollectionName: CollectionName, insertObject: object) {
   return new Promise(function (resolve, reject) {
-    var dbModel = schemaModels[CollectionName];
+    const dbModel = schemaModels[CollectionName];
     if (dbModel) {
-      dbModel.create(insertObject, function (err:any, docs:any) {
+      dbModel.create(insertObject, function (err: any, docs: any) {
         resolve(checkDocs(err, docs));
       });
     } else {
@@ -61,7 +61,7 @@ function create(CollectionName: any, insertObject: any) {
  * @author frenkie
  * @date 2020-08-06
  * @param {String} CollectionName tabel name
- * @param {String} findObject query condition
+ * @param {Object} findObject query condition
  * @param {Object} insertObject create object
  * @param {Object} [opts={
  *     new: true, return create data
@@ -71,21 +71,20 @@ function create(CollectionName: any, insertObject: any) {
  * @returns 
  */
 function findOneAndUpdate(
-  CollectionName : any,
-  findObject : any,
-  insertObject : any,
+  CollectionName : CollectionName,
+  findObject : object,
+  insertObject : object,
   opts = {
     new: true,
     upsert: true,
     returnNewDocument: true,
   }) {
   return new Promise(function (resolve, reject) {
-    var dbModel = schemaModels[CollectionName];
+    const dbModel = schemaModels[CollectionName];
     if (dbModel) {
       dbModel.findOneAndUpdate(findObject, insertObject, {
         new: opts.new,              //false: 不回傳更新資料,    true: 回傳更新資料.
         upsert: opts.upsert,                     //false: 找不到此筆,不新增, true: 找不到此筆,就新增.
-        returnNewDocument: opts.returnNewDocument,//false: 不回傳更新資料,    true: 回傳更新資料.
         useFindAndModify: false
       },
         function (err : any, docs : any) {
@@ -104,14 +103,14 @@ function findOneAndUpdate(
  * @description update data
  * @author frenkie
  * @date 2020-08-06
- * @param {String} CollectionName tabel name
- * @param {String} findObject query condition
+ * @param {CollectionName} CollectionName tabel name
+ * @param {Object} findObject query condition
  * @param {Object} insertObject create object
  * @returns 
  */
-function update(CollectionName : any, findObject : any, updateObject : any) {
+function update(CollectionName : CollectionName, findObject : object, updateObject : object) {
   return new Promise(function (resolve, reject) {
-    var dbModel = schemaModels[CollectionName];
+    const dbModel = schemaModels[CollectionName];
     if (dbModel) {
       dbModel.updateOne(findObject, updateObject, function (err : any, docs : any) {
         if (err) {
@@ -139,8 +138,8 @@ export default {
  * @description to cheack database result and standardization
  * @author frenkie
  * @date 2020-08-06
- * @param {*} err
- * @param {*} docs
+ * @param {*} err from mongode param
+ * @param {*} docs from mongode param
  * @returns 
  */
 function checkDocs(err : any, docs : any) {

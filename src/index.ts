@@ -1,3 +1,5 @@
+///<reference path="./server/definition/schemaModels.d.ts" />
+
 /**
  * @description 伺服器進入點
  * @author frenkie
