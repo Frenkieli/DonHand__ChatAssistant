@@ -16,14 +16,22 @@ export default async function (event: lineEvent) {
   let replyMessage = null;
   switch (event.message.type) {
     case 'text':
-      let message: any = event.message.text.split(' ');
-      let keyWord: any = message.splice(0, 1)[0];
-      let fileStr: any = event.message.text.split('.');
-      let fileName: any = fileStr.splice(fileStr.length - 1, 1)[0];
-      message = message.join(' ');
-      fileStr = fileStr.join(' ');
-      // console.log({ message, keyWord, fileName, fileStr })
-      switch ((fileName === 'jpg' ? fileName : false) || keyWord) {
+      let message: string = event.message.text;
+      let keyWord: string;
+      if(message.slice(message.length - 4 , message.length) === '.jpg'){
+        keyWord = message.slice(message.length - 4 , message.length);
+        message = message.slice(0 , message.length - 4);
+      }else{
+        let messageSplit = message.split(' ');
+        keyWord = messageSplit.splice(0, 1)[0];
+        message = messageSplit.join(' ');
+      }
+      var regex = new RegExp("^[\u4e00-\u9fa5_a-zA-Z0-9_][\u4e00-\u9fa5_a-zA-Z0-9_ ][\u4e00-\u9fa5_a-zA-Z0-9_]*$");
+      if(!regex.test(message)){
+        console.log('要寫在觸發事件後去檢查然後退回驗證失敗');
+      }
+      console.log(regex.test(message), {message, keyWord});
+      switch (keyWord) {
         case '.h':
           replyMessage = [
             { type: 'text', text: '目前可用指令如下'},
@@ -116,11 +124,11 @@ export default async function (event: lineEvent) {
               memeName: message
             }
           }else{
-            replyMessage = { type: 'text', text: '"' + fileStr + '.jpg"已經存在了喔！'};
+            replyMessage = { type: 'text', text: '"' + message + '.jpg"已經存在了喔！'};
           }
           break;
-        case 'jpg':
-          let memeResult = await db.findOneQuery('memeImages', {memeName : fileStr}) as any;
+        case '.jpg':
+          let memeResult = await db.findOneQuery('memeImages', {memeName : message}) as any;
           console.log(memeResult, 'memeResult')
           if(memeResult){
             replyMessage = {
@@ -129,7 +137,7 @@ export default async function (event: lineEvent) {
               previewImageUrl: memeResult.fileUrl
             }
           }else{
-            replyMessage = { type: 'text', text: '"' + fileStr + '.jpg"不存在喔！為我們新增？'};
+            replyMessage = { type: 'text', text: '"' + message + '.jpg"不存在喔！為我們新增？'};
           }
           break
         default:
