@@ -3,15 +3,26 @@
  * @author frenkie
  * @date 2020-08-06
  */
-import { db } from './_import';
+import LineBase from './lineBase';
 
-
-
-export default function (event: lineEvent) {
-  console.log('取消跟隨發生');
-  console.log(event);
-  let query = {
-    userId: event.source.userId
+class LineUnfollow extends LineBase {
+  /**
+   * @description line unfollow event
+   * @author frenkie
+   * @date 2020-08-11
+   * @param {lineEvent} event
+   * @returns 
+  */
+  public unfollow (event: lineEvent) {
+    console.log('取消跟隨發生');
+    console.log(event);
+    let query = {
+      userId: event.source.userId
+    }
+    this.db.update('lineUsers', query, { following: false });
   }
-  db.update('lineUsers', query, { following: false });
 }
+
+let lineUnfollowItem = new LineUnfollow;
+
+export default lineUnfollowItem.unfollow.bind(lineUnfollowItem);

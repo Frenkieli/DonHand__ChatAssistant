@@ -124,14 +124,14 @@ function update(CollectionName : CollectionName, findObject : object, updateObje
   })
 }
 
-
-
-export default {
+let mongoDBItem : mongoDB = {
   findOneQuery,
   create,
   findOneAndUpdate,
   update
 };
+
+export default mongoDBItem;
 
 
 /**

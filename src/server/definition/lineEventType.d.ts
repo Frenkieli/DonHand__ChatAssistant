@@ -37,3 +37,14 @@ interface lineUserData {
   language: string,
   following?: boolean
 }
+
+
+interface lineBaseClass {
+  request : any,
+  config : object,
+  client : any,
+  fsItem : object,
+  db : object,
+  getLineUserData : Function,
+  getLineMessageImages : Function,
+}
