@@ -31,7 +31,81 @@ export default async function (event) {
           ];
           break;
         case '.y2b':
-          replyMessage = { type: 'text', text: 'yuotube:' + message };
+          var request = require('request');
+          let url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=8&q=' + encodeURI(message) +'&type=video&videoCategoryId=10&key=' + config.googleApiKey;
+          console.log(url)
+          var options = {
+            'method': 'GET',
+            'url': url,
+            'headers': {
+            }
+          };
+          request(options, function (error, response) {
+            if (error) throw new Error(error);
+            let youtubeItems = JSON.parse(response.body).items;
+            console.log(response.body, '獲取youtube結果');
+            console.log(youtubeItems, 'youtubeItems');
+            let flexContents = [];
+            youtubeItems.forEach(v=>{
+              flexContents.push({
+                "type": "bubble",
+                "hero": {
+                  "type": "image",
+                  "url": v.snippet.thumbnails.medium.url,
+                  "size": "full",
+                  "aspectMode": "cover",
+                  "aspectRatio": "480:260"
+                },
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": v.snippet.title,
+                      "weight": "bold",
+                      "size": "md",
+                      "style": "italic"
+                    },
+                    {
+                      "type": "text",
+                      "text": v.snippet.channelTitle,
+                      "size": "xxs",
+                      "align": "end"
+                    }
+                  ]
+                },
+                "footer": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
+                    {
+                      "type": "button",
+                      "action": {
+                        "type": "uri",
+                        "label": "前往",
+                        "uri": "https://www.youtube.com/watch?v=" + v.id.videoId
+                      },
+                      "style": "primary",
+                      "height": "sm"
+                    }
+                  ]
+                }
+              })
+            })
+            replyMessage = {
+              type: "flex",
+              altText: "this is a youtube search result",
+              contents: {
+                  type: "carousel",
+                  contents: flexContents
+                }
+              }
+            console.log('replyMessage', replyMessage)
+            client.replyMessage(event.replyToken, replyMessage).catch(err => {
+              console.log('回覆line錯誤:' + err)
+            });
+          });
           break;
         case '.meme':
           let checkMemeResult = await db.findOneQuery('memeImages', {memeName : message});
