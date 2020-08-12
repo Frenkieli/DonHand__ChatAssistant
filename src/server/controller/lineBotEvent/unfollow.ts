@@ -3,7 +3,7 @@
  * @author frenkie
  * @date 2020-08-06
  */
-import LineBase from './lineBase';
+import LineBase from './_lineBase';
 
 class LineUnfollow extends LineBase {
   /**

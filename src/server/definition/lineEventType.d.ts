@@ -1,12 +1,24 @@
-
 type lineEventName = 'follow' | 'message' | 'unfollow';
-type lineMessageEventName = 'text' | 'image';
-
 interface lineEventType {
   follow: any,
   message: any,
   unfollow: any,
 }
+
+type lineMessageEventName = 'text' | 'image';
+interface lineMessageEventType {
+  text: Function,
+  image: Function,
+}
+
+type lineMessageCommandEventName = 'h' | 'y2b' | 'meme' | 'jpg';
+interface lineMessageCommandEventType {
+  h: Function,
+  y2b: Function,
+  meme: Function,
+  jpg: Function,
+}
+
 interface lineEventSource {
   userId: string,
   type: string,
@@ -48,3 +60,5 @@ interface lineBaseClass {
   getLineUserData : Function,
   getLineMessageImages : Function,
 }
+
+type replyMessage = object | Array<object> | null;

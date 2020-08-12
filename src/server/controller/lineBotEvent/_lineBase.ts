@@ -29,6 +29,7 @@ export default class LineBase implements lineBaseClass {
  * @date 2020-08-06
  * @param {*} userId
  * @returns 
+ * @memberof LineBase
  */
   public getLineUserData(userId: string): Promise<lineUserData> {
     return new Promise((resolve, reject) => {
@@ -58,6 +59,7 @@ export default class LineBase implements lineBaseClass {
  * @param {String} type .jpg
  * @param {String} path ./ src/xxx
  * @returns 
+ * @memberof LineBase
  */
   public getLineMessageImages(messageId: string, name: string, type: string, path: string): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -74,5 +76,21 @@ export default class LineBase implements lineBaseClass {
           });
         });
     })
+  }
+
+  /**
+   * @description to reply line message
+   * @author frenkie
+   * @date 2020-08-12
+   * @param {string} replyToken
+   * @param {replyMessage} replyMessage
+   * @memberof LineBase
+   */
+  public replyMessageEvent(replyToken: string, replyMessage: replyMessage): void {
+    if (replyMessage) {
+      this.client.replyMessage(replyToken, replyMessage).catch((err: any) => {
+        console.log('回覆line錯誤:' + err)
+      });
+    }
   }
 }
