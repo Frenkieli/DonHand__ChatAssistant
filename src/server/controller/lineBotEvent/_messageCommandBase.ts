@@ -104,7 +104,7 @@ export default class LineMessageCommand extends LineBase {
         })
         replyMessage = {
           type: "flex",
-          altText: "this is a youtube search result",
+          altText: message + "的搜尋結果(youtube)",
           contents: {
             type: "carousel",
             contents: flexContents
