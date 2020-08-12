@@ -9,6 +9,7 @@
     "noImplicitAny": true,                 /* Raise error on expressions and declarations with an implied 'any' type. */
     "strictNullChecks": true,              /* Enable strict null checks. */
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,  /* Disallow inconsistently-cased references to the same file. */
     "baseUrl": ".",
     "paths": {

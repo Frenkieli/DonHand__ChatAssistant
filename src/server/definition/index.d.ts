@@ -27,3 +27,9 @@ interface configItem {
   googleApiKey: string,
   mongoDB: string
 }
+
+type airObject = {
+  SiteName: string,
+  County: string,
+  AQI: number,
+}

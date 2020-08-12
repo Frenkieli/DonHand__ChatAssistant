@@ -7,6 +7,7 @@
 import LineBase from './_lineBase';
 const globalAny: any = global;
 import getAirQuality from '@@interface/getAirQuality';
+import lineTempMaker from '@@controller/lineBotEvent/lineTempMaker/lineTempMaker';
 
 export default class LineMessageCommand extends LineBase {
   /**
@@ -23,7 +24,11 @@ export default class LineMessageCommand extends LineBase {
     return new Promise((resolve, rejects) => {
       replyMessage = [
         { type: 'text', text: '目前可用指令如下' },
-        { type: 'text', text: '.y2b XXX，回覆youtube的搜尋結果' + '\n\n' + '.meme XXX，建立XXX.jpg的梗圖' + '\n\n' + 'XXX.jpg，要求機器人回傳對應的梗圖' }
+        { type: 'text', text: 
+        '.y2b XXX，回覆youtube的搜尋結果' + '\n\n' 
+        + '.air XXX，取得對應縣市的空汙資料' + '\n\n' 
+        + '.meme XXX，建立XXX.jpg的梗圖' + '\n\n' 
+        + 'XXX.jpg，要求機器人回傳對應的梗圖' + '\n\n'}
       ];
       resolve(replyMessage);
     })
@@ -175,10 +180,45 @@ export default class LineMessageCommand extends LineBase {
     const vm = this;
     let replyMessage: replyMessage = null;
     return new Promise(async (resolve, rejects) => {
-      getAirQuality('新北市').then(res=>{
-        console.log('拿到了', res);
-        resolve({ type: 'text', text: '空氣拿到囉'})
-      })
+      let string : any = {
+        '宜蘭縣' : '宜蘭縣',
+        '花蓮縣' : '花蓮縣',
+        '金門縣' : '金門縣',
+        '南投縣' : '南投縣',
+        '屏東縣' : '屏東縣',
+        '苗栗縣' : '苗栗縣',
+        '桃園市' : '桃園市',
+        '高雄市' : '高雄市',
+        '基隆市' : '基隆市',
+        '連江縣' : '連江縣',
+        '雲林縣' : '雲林縣',
+        '新北市' : '新北市',
+        '新竹市' : '新竹市',
+        '新竹縣' : '新竹縣',
+        '嘉義市' : '嘉義市',
+        '嘉義縣' : '嘉義縣',
+        '彰化縣' : '彰化縣',
+        '臺中市' : '臺中市',
+        '臺北市' : '臺北市',
+        '臺東縣' : '臺東縣',
+        '臺南市' : '臺南市',
+        '澎湖縣' : '澎湖縣'
+      };
+      if(string[message]){
+        getAirQuality(message).then((res: Array<airObject>)=>{
+          replyMessage = lineTempMaker.airQualityMaker(res, message);
+          resolve(replyMessage)
+        })
+      }else{
+        let str : string = '';
+        for(let key in string){
+          str += key + ',';
+        }
+        str = str.slice(0, str.length-1);
+        replyMessage = [{ type: 'text', text: '那個地方...好像沒有空氣監測站ㄟ，目前只有下列的縣市有監測站喔，抱歉'},
+                        { type: 'text', text: str}];
+        resolve(replyMessage);
+      }
     })
   }
 }

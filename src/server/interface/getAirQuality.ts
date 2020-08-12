@@ -17,7 +17,7 @@ class AirQuality{
     this.dataTime = setTimeout(() => {}, 0);;
     this.cooldown = false;
   }
-  public getAirQuality(cityName: string): Promise<object>{
+  public getAirQuality(cityName: string): Promise<Array<airObject>>{
     let vm = this;
     return new Promise(async (resolve, reject)=>{
       console.log('開始獲取品質資料');
@@ -36,7 +36,7 @@ class AirQuality{
       }
     })
   }
-  private filtersAirQuality(cityName: string): object{
+  private filtersAirQuality(cityName: string): Array<airObject>{
     let vm = this;
     if(!vm.data) vm.data = [];
     let data = vm.data.filter(v=>{
@@ -51,7 +51,7 @@ class AirQuality{
     let vm = this;
     return new Promise((resolve, reject)=>{
       axios.get('https://opendata.epa.gov.tw/webapi/api/rest/datastore/355000000I-000259?sort=AQI&offset=0&limit=1000').then(res=>{
-        console.log('獲取空器品質資料');
+        console.log('獲取空氣品質資料');
         vm.data = res.data.result.records;
         vm.cooldown = true;
         setTimeout(() => {
