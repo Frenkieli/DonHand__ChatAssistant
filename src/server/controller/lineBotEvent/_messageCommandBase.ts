@@ -6,6 +6,7 @@
 
 import LineBase from './_lineBase';
 const globalAny: any = global;
+import getAirQuality from '@@interface/getAirQuality';
 
 export default class LineMessageCommand extends LineBase {
   /**
@@ -167,6 +168,17 @@ export default class LineMessageCommand extends LineBase {
         replyMessage = { type: 'text', text: '"' + message + '.jpg"不存在喔！為我們新增？' };
         resolve(replyMessage);
       }
+    })
+  }
+  
+  public onTextMessageAirQuality (message: string): Promise<replyMessage>{
+    const vm = this;
+    let replyMessage: replyMessage = null;
+    return new Promise(async (resolve, rejects) => {
+      getAirQuality('新北市').then(res=>{
+        console.log('拿到了', res);
+        resolve({ type: 'text', text: '空氣拿到囉'})
+      })
     })
   }
 }

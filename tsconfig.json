@@ -17,6 +17,7 @@
       "@@controller/*": ["src/server/controller/*"],
       "@@models/*": ["src/server/models/*"],
       "@@routes/*": ["src/server/routes/*"],
+      "@@interface/*": ["src/server/interface/*"],
     }
   }
 }

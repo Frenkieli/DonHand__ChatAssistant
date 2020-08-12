@@ -58,6 +58,7 @@ class LineMessage extends messageCommandBase {
         y2b: vm.onTextMessageYoutube.bind(vm),
         meme: vm.onTextMessageMeme.bind(vm),
         jpg: vm.onTextMessageMemeJpg.bind(vm),
+        air: vm.onTextMessageAirQuality.bind(vm),
       }
       if(commandHandleEvent[keyWord]){
         if ((message.length === 0 || !regex.test(message)) && keyWord !== 'h') {
