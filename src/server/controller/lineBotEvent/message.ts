@@ -45,13 +45,13 @@ class LineMessage extends messageCommandBase {
     let keyWord: lineMessageCommandEventName;
     if (message.slice(message.length - 4, message.length) === '.jpg') {
       keyWord = message.slice(message.length - 4, message.length).replace('.', '') as lineMessageCommandEventName;
-      message = message.slice(0, message.length - 4);
-    } else {
+      message = message.slice(0, message.length - 4).trim();
+    } else if(message.slice(0, 1) === '.' && message.slice(0, 4) !== '.jpg') {
       let messageSplit = message.split(' ');
       keyWord = messageSplit.splice(0, 1)[0].replace('.', '') as lineMessageCommandEventName;
-      message = messageSplit.join(' ');
+      message = messageSplit.join(' ').trim();
     }
-    const regex = new RegExp("^[\u4e00-\u9fa5_a-zA-Z0-9_][\u4e00-\u9fa5_a-zA-Z0-9_ ][\u4e00-\u9fa5_a-zA-Z0-9_]*$");
+    const regex = new RegExp("^[\u4e00-\u9fa5_a-zA-Z0-9_ ]*$");
     return new Promise(async (resolve, rejects) => {
       const commandHandleEvent: lineMessageCommandEventType = {
         h: vm.onTextMessageHelp.bind(vm),
@@ -60,7 +60,7 @@ class LineMessage extends messageCommandBase {
         jpg: vm.onTextMessageMemeJpg.bind(vm),
       }
       if(commandHandleEvent[keyWord]){
-        if (!regex.test(message)) {
+        if ((message.length === 0 || !regex.test(message)) && keyWord !== 'h') {
           replyMessage = { type: 'text', text: '不好意思，我只看得懂中英文ㄟ，抱歉。' }
           resolve(replyMessage);
         }
