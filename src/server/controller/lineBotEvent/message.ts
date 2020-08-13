@@ -64,9 +64,10 @@ class LineMessage extends messageCommandBase {
         if ((message.length === 0 || !regex.test(message)) && keyWord !== 'h') {
           replyMessage = { type: 'text', text: '不好意思，我只看得懂中英文ㄟ，抱歉。' }
           resolve(replyMessage);
+        }else{
+          let result : replyMessage = await commandHandleEvent[keyWord](message, event);
+          resolve(result);
         }
-        let result : replyMessage = await commandHandleEvent[keyWord](message, event);
-        resolve(result);
       }
     })
   }
