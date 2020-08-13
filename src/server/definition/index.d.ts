@@ -1,5 +1,6 @@
 ///<reference path="./lineEventType.d.ts" />
 ///<reference path="./schemaModels.d.ts" />
+///<reference path="./interface.d.ts" />
 
 type configDB = {
   host :string,
@@ -26,10 +27,4 @@ interface configItem {
   serverIP: string,
   googleApiKey: string,
   mongoDB: string
-}
-
-type airObject = {
-  SiteName: string,
-  County: string,
-  AQI: number,
 }
