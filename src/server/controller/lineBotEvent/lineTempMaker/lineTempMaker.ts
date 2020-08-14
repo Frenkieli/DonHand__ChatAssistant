@@ -14,7 +14,10 @@ export default class LineFlexTempMaker {
         text : '#000000',
         color : ''
       };
-      if (v.AQI <= 50) {
+      if((v.AQI).toString().length === 0){
+        color.text = '#000000';
+        color.color = '#C0C0C0';
+      }else if (v.AQI <= 50) {
         color.color = '#00ff00';
       } else if (v.AQI <= 100) {
         color.color = '#FFFF00';

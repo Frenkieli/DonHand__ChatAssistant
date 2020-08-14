@@ -2,7 +2,7 @@ type airObject = {
   Status: string,
   SiteName: string,
   County: string,
-  AQI: number,
+  AQI: number,  // 他其實是字串型別的數字
 }
 
 
