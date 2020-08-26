@@ -6,8 +6,9 @@
 
 import LineBase from './_lineBase';
 const globalAny: any = global;
-import getAirQuality from '@@interData/getAirQuality';
-import getWeather from '@@interData/getWeather';
+// import getAirQuality from '@@interData/getAirQuality';
+// import getWeather from '@@interData/getWeather';
+import getAirData from '@@interData/getAirData';
 import lineTempMaker from '@@controller/lineBotEvent/lineTempMaker/lineTempMaker';
 
 export default class LineMessageCommand extends LineBase {
@@ -181,6 +182,7 @@ export default class LineMessageCommand extends LineBase {
     const vm = this;
     let replyMessage: replyMessage = null;
     return new Promise(async (resolve, rejects) => {
+      message = message.replace('台', '臺');
       let string : any = {
         '宜蘭縣' : '宜蘭縣',
         '花蓮縣' : '花蓮縣',
@@ -206,7 +208,7 @@ export default class LineMessageCommand extends LineBase {
         '澎湖縣' : '澎湖縣'
       };
       if(string[message]){
-        Promise.all([getWeather(message), getAirQuality(message)]).then(result=>{
+        getAirData(message).then(result=>{
           replyMessage = lineTempMaker.airMaker(result[0], result[1], message)
           resolve(replyMessage)
         })
