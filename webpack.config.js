@@ -53,7 +53,8 @@ const serverConfig = {
       '@@controller': path.resolve('./src/server/controller'),
       '@@models': path.resolve('./src/server/models'),
       '@@routes': path.resolve('./src/server/routes'),
-      '@@interface': path.resolve('./src/server/interface'),
+      '@@interData': path.resolve('./src/server/interface/data'),
+      '@@interModules': path.resolve('./src/server/interface/modules'),
     }
   },
 }

@@ -1,5 +1,5 @@
 {
-  "name": "linebot_crawler",
+  "name": "donhand__chatassistant",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,6 +7,7 @@
     "start:watch": "webpack -d -w",
     "start:server": "nodemon dist/index.bundle.js",
     "heroku-postbuild": "webpack -d",
+    "localserver": "concurrently npm:start:*",
     "start": "node dist/index.bundle.js"
   },
   "repository": {

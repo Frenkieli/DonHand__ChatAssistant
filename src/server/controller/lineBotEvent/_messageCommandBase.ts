@@ -6,8 +6,8 @@
 
 import LineBase from './_lineBase';
 const globalAny: any = global;
-import getAirQuality from '@@interface/getAirQuality';
-import getWeather from '@@interface/getWeather';
+import getAirQuality from '@@interData/getAirQuality';
+import getWeather from '@@interData/getWeather';
 import lineTempMaker from '@@controller/lineBotEvent/lineTempMaker/lineTempMaker';
 
 export default class LineMessageCommand extends LineBase {
