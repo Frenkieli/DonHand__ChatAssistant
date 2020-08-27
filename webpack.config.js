@@ -3,6 +3,7 @@
 const nodeExternals = require('webpack-node-externals');
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 
 const serverConfig = {
   target: 'node',
@@ -34,14 +35,14 @@ const serverConfig = {
       },
     ],
   },
-  plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: path.join(__dirname, 'src/client/views'), to: path.join(__dirname, 'dist/views') },
-        { from: path.join(__dirname, 'src/client/static'), to: path.join(__dirname, 'dist/public') },
-      ]
-    })
-  ],
+  // plugins: [
+  //   new CopyPlugin({
+  //     patterns: [
+  //       { from: path.join(__dirname, 'src/client/views'), to: path.join(__dirname, 'dist/views') },
+  //       { from: path.join(__dirname, 'src/client/static'), to: path.join(__dirname, 'dist/public') },
+  //     ]
+  //   })
+  // ],
   optimization: {
     minimize: true,
   },
@@ -59,52 +60,77 @@ const serverConfig = {
   },
 }
 
-// const clientConfig = {
-//   target: 'web',
-//   devtool: 'eval-source-map',
-//   node: {
-//     __dirname: false,
-//     __filename: true,
-//   },
-//   externals: [nodeExternals()],
-//   entry: {
-//     // 'index': './src/index.js',
-//     'public/javascripts/temibroad': './src/client/typescript/temibroad/temibroad.ts'
-//   },
-//   output: {
-//     path: path.join(__dirname, 'dist'),
-//     filename: '[name].bundle.js',
-//     libraryTarget: 'commonjs2',
-//   },
-//   module: {   //設定你的檔案選項
-//     rules: [
-//       {
-//         test: /\.js$/,
-//         exclude: /node_modules/,
-//         use: 'babel-loader'
-//       },
-//       {
-//         test: /\.tsx?$/,
-//         use: 'ts-loader',
-//         exclude: /node_modules/,
-//       },
-//     ],
-//   },
-//   resolve: {
-//     extensions: [ '.tsx', '.ts', '.js' ],
-//   },
-//   plugins: [
-//     new CopyWebpackPlugin([
-//       { from: 'src/client/views', to: 'views' },
-//       { from: 'src/client/static', to: 'public' },
-//     ])
-//   ],
-//   optimization: {
-//     minimize: true,
-//   }
-// }
+const clientConfig = {
+  target: 'web',
+  devtool: 'eval-source-map',
+  node: {
+    __dirname: false,
+    __filename: true,
+  },
+  entry: {
+    'index': './src/client/main.js',
+  },
+  output: {
+    path: path.join(__dirname, 'dist/public/javascripts'),
+    filename: '[name].bundle.js',
+  },
+  module: {   //設定你的檔案選項
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {compact: false},  // 開發中不需要優化所以這樣設定
+      },
+      {
+        test: /\.scss|\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              // Provide path to the file with resources
+              resources: './src/client/scss/global.scss',
+            },
+          },
+        ]
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name][hash].[ext]',
+          outputPath: path.join(__dirname, 'dist/public/images'),
+          esModule: false,
+        },
+      }
+    ],
+  },
+  // resolve: {
+  //   extensions: [ '.tsx', '.ts', '.js' ],
+  // },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: path.join(__dirname, 'src/client/views'), to: path.join(__dirname, 'dist/views') },
+        { from: path.join(__dirname, 'src/client/static'), to: path.join(__dirname, 'dist/public') },
+      ]
+    }),
+    new VueLoaderPlugin()
+  ],
+  optimization: {
+    minimize: true,
+  }
+}
 
 
 
-// module.exports = [serverConfig, clientConfig];
-module.exports = [serverConfig];
+module.exports = [serverConfig, clientConfig];
+// module.exports = [serverConfig];
