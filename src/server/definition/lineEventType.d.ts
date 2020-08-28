@@ -16,6 +16,7 @@ interface lineMessageCommandEventType {
   h: Function,
   y2b: Function,
   meme: Function,
+  delme: Function,
   jpg: Function,
   air: Function,
 }

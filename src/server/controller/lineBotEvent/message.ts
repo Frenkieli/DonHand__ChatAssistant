@@ -57,6 +57,7 @@ class LineMessage extends messageCommandBase {
         h: vm.onTextMessageHelp.bind(vm),
         y2b: vm.onTextMessageYoutube.bind(vm),
         meme: vm.onTextMessageMeme.bind(vm),
+        delme: vm.onTextMessageDelme.bind(vm),
         jpg: vm.onTextMessageMemeJpg.bind(vm),
         air: vm.onTextMessageAirQuality.bind(vm),
       }
@@ -112,12 +113,12 @@ class LineMessage extends messageCommandBase {
             if (error) throw new Error(error);
             let imgurData = JSON.parse(res.body).data;
             replyMessage = [
-              {
-                type: 'image',
-                originalContentUrl: imgurData.link,
-                previewImageUrl: imgurData.link
-              },
-              { type: 'text', text: '梗圖"' + lineUserStates.memeName + '.jpg"上傳完成' }
+              // {
+              //   type: 'image',
+              //   originalContentUrl: imgurData.link,
+              //   previewImageUrl: imgurData.link
+              // },
+              { type: 'text', text: lineUserStates.memeName + '.jpg"上傳完成' }
             ]
             vm.db.create('memeImages', {
               userId: event.source.userId,

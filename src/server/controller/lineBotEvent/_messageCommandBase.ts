@@ -10,6 +10,8 @@ const globalAny: any = global;
 // import getWeather from '@@interData/getWeather';
 import getAirData from '@@interData/getAirData';
 import lineTempMaker from '@@controller/lineBotEvent/lineTempMaker/lineTempMaker';
+import axiosItem from '@@interModules/axios';
+
 
 export default class LineMessageCommand extends LineBase {
   /**
@@ -30,7 +32,8 @@ export default class LineMessageCommand extends LineBase {
         '.y2b XXX，回覆youtube的搜尋結果' + '\n\n' 
         + '.air XXX，取得對應縣市的空汙資料' + '\n\n' 
         + '.meme XXX，建立XXX.jpg的梗圖' + '\n\n' 
-        + 'XXX.jpg，要求機器人回傳對應的梗圖' + '\n\n'}
+        + '.delme XXX，刪除XXX.jpg的梗圖' + '\n\n' 
+        + 'XXX.jpg，要求機器人回傳對應的梗圖'}
       ];
       resolve(replyMessage);
     })
@@ -138,7 +141,7 @@ export default class LineMessageCommand extends LineBase {
     return new Promise(async (resolve, rejects) => {
       let checkMemeResult = await vm.db.findOneQuery('memeImages', { memeName: message });
       if (!checkMemeResult) {
-        replyMessage = { type: 'text', text: '請為"' + message + '.jpg"上傳對應的圖片，這張圖片每個人都看的到喔！注意不要上傳私人照片或是為違法照片。' };
+        replyMessage = { type: 'text', text: '請為"' + message + '.jpg"上傳對應的圖片，這張圖片每個人都看的到！注意不要上傳私人照片或是為違法照片。' };
         globalAny.lineUserStates[event.source.userId] = {
           type: 'meme',
           memeName: message
@@ -146,6 +149,38 @@ export default class LineMessageCommand extends LineBase {
         resolve(replyMessage);
       } else {
         replyMessage = { type: 'text', text: '"' + message + '.jpg"已經存在了喔！' };
+        resolve(replyMessage);
+      }
+    })
+  }
+  /**
+   * @description command .delmeme event
+   * @author frenkie
+   * @date 2020-08-28
+   * @param {string} message
+   * @param {lineEvent} event
+   * @returns {Promise<replyMessage>}
+   * @memberof LineMessageCommand
+   */
+  public onTextMessageDelme (message: string, event: lineEvent): Promise<replyMessage>{
+    const vm = this;
+    let replyMessage: replyMessage = null;
+    return new Promise(async (resolve, rejects) => {
+      let checkMemeResult = await vm.db.findOneQuery('memeImages', { memeName: message });
+      if (checkMemeResult) {
+        console.log(checkMemeResult.deletehash, 'checkMemeResult')
+        axiosItem.delete('https://api.imgur.com/3/image/' + checkMemeResult.deletehash, null, {
+          Authorization: 'Client-ID ' + vm.config.imgur.clientID
+        }).then(()=>{
+          vm.db.remove('memeImages', { _id: checkMemeResult._id });
+          replyMessage = [
+            { type: 'text', text: message + '.jpg"已經刪除囉！注意該圖片如果已經被讀取，會暫時保留在line的暫存檔中，如不放心可以到此網址確認該圖片已經被刪除。' },
+            { type: 'text', text: checkMemeResult.fileUrl }
+          ];
+          resolve(replyMessage);
+        })
+      } else {
+        replyMessage = { type: 'text', text: '"' + message + '.jpg"找不到呢！' };
         resolve(replyMessage);
       }
     })
