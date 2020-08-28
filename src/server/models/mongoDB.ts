@@ -124,11 +124,39 @@ function update(CollectionName : CollectionName, findObject : object, updateObje
   })
 }
 
+/**
+ * @description delete de data
+ * @author frenkie
+ * @date 2020-08-28
+ * @param {CollectionName} CollectionName tabel name
+ * @param {object} findObject query condition
+ * @returns 
+ */
+function remove(CollectionName: CollectionName, findObject: object) {
+  return new Promise(function (resolve, reject) {
+    const dbModel = schemaModels[CollectionName];
+      if (dbModel) {
+        if (typeof findObject === 'string') {
+          dbModel.findByIdAndRemove(findObject, function (err: any, docs: any) {
+            if(err) {console.log('remove: ', err);}
+            resolve(checkDocs(err, docs));
+          })
+        } else {
+          dbModel.remove(findObject, function (err: any, docs: any) {
+            if(err) {console.log('remove2: ', err);}
+            resolve(checkDocs(err, docs));
+          })
+        }
+      } else resolve(false);
+  })
+}
+
 let mongoDBItem : mongoDB = {
   findOneQuery,
   create,
   findOneAndUpdate,
-  update
+  update,
+  remove
 };
 
 export default mongoDBItem;

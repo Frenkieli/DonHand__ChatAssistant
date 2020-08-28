@@ -30,15 +30,19 @@ class AxiosItem {
       }
     )
   }
-  private static axiosMain(url: string, method: Method, data : object | null = null){
+  private static axiosMain(url: string, method: Method, data : object | null = null, header : object = {}){
     return this.axios.request({
       url: url,
       method: method,
+      headers: header,
       data: data
     });
   }
-  static get(url: string, data : object | null = null) {
-    return this.axiosMain(url, 'get', data)
+  static get(url: string, data : object | null = null, header : object = {}) {
+    return this.axiosMain(url, 'get', data, header)
+  }
+  static delete(url: string, data : object | null = null, header : object = {}) {
+    return this.axiosMain(url, 'delete', data, header)
   }
 }
 

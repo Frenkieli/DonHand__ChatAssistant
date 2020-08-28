@@ -10,4 +10,5 @@ interface mongoDB {
     create: Function,
     findOneAndUpdate: Function,
     update: Function,
+    remove: Function,
 }
