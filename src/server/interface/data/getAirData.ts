@@ -6,42 +6,17 @@
 import axiosItem from '@@interModules/axios';
 
 class AirData{
-  public airData : Array<any> | null;
-  public weatherData : Array<any> | null;
-  public dataTime : NodeJS.Timeout;
-  public cooldown : boolean;
+  public airData : Array<airLocationObject> | null;
+  public weatherData : Array<weatherLocationObject> | null;
   constructor(){
     this.airData = null;
     this.weatherData = null;
-    this.dataTime = setTimeout(() => {}, 0);;
-    this.cooldown = false;
   }
-  public getAirData(cityName: string): Promise<Array<any>>{
+  public getAirData(cityName: string): Promise<Array< Array<airLocationObject> | Array<weatherLocationElementObject> >>{
     let vm = this;
     return new Promise(async (resolve, reject)=>{
-      if(vm.airData){
         console.log('直接回覆暫存資料');
-        if(!vm.cooldown){
-          vm.getAirQualityData();
-          vm.getWeatherData();
-        }
         resolve([vm.filtersWeather(cityName), vm.filtersAirQuality(cityName)]);
-      }else{
-        Promise.all([vm.getAirQualityData(), vm.getWeatherData()]).then((res :any)=>{
-          vm.cooldown = true;
-          setTimeout(() => {
-            vm.cooldown = false;
-          }, 25 * 60 * 1000);
-          clearTimeout(vm.dataTime);
-          vm.dataTime = setTimeout(() => {
-            vm.airData = null;
-            vm.weatherData = null;
-          }, 30 * 60 * 1000);
-          vm.airData = res[0];
-          vm.weatherData = res[1];
-          resolve([vm.filtersWeather(cityName), vm.filtersAirQuality(cityName)]);
-        })
-      }
     })
   }
   private filtersWeather(cityName: string): Array<weatherLocationElementObject> {
@@ -54,7 +29,7 @@ class AirData{
     })[0]
     return weatherData
   }
-  private filtersAirQuality(cityName: string): Array<airObject>{
+  private filtersAirQuality(cityName: string): Array<airLocationObject>{
     let vm = this;
     if(!vm.airData) vm.airData = [];
     let airData = vm.airData.filter(v=>{
@@ -64,7 +39,7 @@ class AirData{
     })
     return airData
   }
-  private getAirQualityData() : Promise<any>{
+  private getAirQualityData() : Promise<Array<airLocationObject>>{
     let vm = this;
     return new Promise((resolve, reject)=>{
       axiosItem.get('https://opendata.epa.gov.tw/webapi/api/rest/datastore/355000000I-000259?sort=AQI&offset=0&limit=1000').then(res=>{
@@ -86,8 +61,20 @@ class AirData{
       })
     })
   }
+
+  public toGetAirData(){
+    let vm = this;
+    Promise.all([vm.getAirQualityData(), vm.getWeatherData()]).then((res :any)=>{
+      vm.airData = res[0];
+      vm.weatherData = res[1];
+    })
+  }
 }
 
 let airData = new AirData;
+airData.toGetAirData();
+setInterval(()=>{
+  airData.toGetAirData();
+}, 60 * 60 * 1000)
 
 export default airData.getAirData.bind(airData);
