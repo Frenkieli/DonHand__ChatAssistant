@@ -64,7 +64,7 @@ const clientConfig = {
   target: 'web',
   devtool: 'eval-source-map',
   entry: {
-    'index': './src/client/main.js',
+    'index': path.join(__dirname, 'src/client/main.js')
   },
   output: {
     path: path.join(__dirname, 'dist/public/javascripts'),
