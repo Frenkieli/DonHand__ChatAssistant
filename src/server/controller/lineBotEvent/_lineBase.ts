@@ -63,7 +63,7 @@ export default class LineBase implements lineBaseClass {
  */
   public getLineMessageImages(messageId: string, name: string, type: string, path: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      client.getMessageContent(messageId)
+      this.client.getMessageContent(messageId)
         .then(async (stream: any) => {
           let writable = await fsItem.createWriteStream(name, type, path);
           stream.pipe(writable);
