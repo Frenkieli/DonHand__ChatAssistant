@@ -244,7 +244,7 @@ export default class LineMessageCommand extends LineBase {
       };
       if(string[message]){
         getAirData(message).then(result=>{
-          replyMessage = lineTempMaker.airMaker(result[0], result[1], message)
+          replyMessage = lineTempMaker.airMaker(result[0] as Array<weatherLocationElementObject>, result[1] as Array<airLocationObject>, message)
           resolve(replyMessage)
         })
       }else{

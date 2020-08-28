@@ -5,11 +5,11 @@
  */
 export default class LineFlexTempMaker {
   constructor() { }
-  static airMaker(weatherData: Array<weatherLocationElementObject>, airQualityData: Array<airObject>,local: string): replyMessage {
+  static airMaker(weatherData: Array<weatherLocationElementObject>, airQualityData: Array<airLocationObject>,local: string): replyMessage {
     let replyMessage: replyMessage;
     let replyContent: Array<object> = [];
     for (let i = 0; i < airQualityData.length; i++) {
-      let v: airObject = airQualityData[i];
+      let v: airLocationObject = airQualityData[i];
       let color = {
         text : '#000000',
         color : ''

@@ -1,8 +1,8 @@
 type lineEventName = 'follow' | 'message' | 'unfollow';
 interface lineEventType {
-  follow: any,
-  message: any,
-  unfollow: any,
+  follow: Function,
+  message: Function,
+  unfollow: Function,
 }
 
 type lineMessageEventName = 'text' | 'image';
@@ -51,7 +51,6 @@ interface lineUserData {
   language: string,
   following?: boolean
 }
-
 
 interface lineBaseClass {
   request : any,
