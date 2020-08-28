@@ -63,10 +63,6 @@ const serverConfig = {
 const clientConfig = {
   target: 'web',
   devtool: 'eval-source-map',
-  node: {
-    __dirname: false,
-    __filename: true,
-  },
   entry: {
     'index': './src/client/main.js',
   },
@@ -74,22 +70,51 @@ const clientConfig = {
     path: path.join(__dirname, 'dist/public/javascripts'),
     filename: '[name].bundle.js',
   },
+  plugins: [
+    new VueLoaderPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: path.join(__dirname, 'src/client/views'), to: path.join(__dirname, 'dist/views') },
+        { from: path.join(__dirname, 'src/client/static'), to: path.join(__dirname, 'dist/public') },
+      ]
+    })
+  ],
   module: {   //設定你的檔案選項
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: [
+          {
+            loader: 'vue-loader',
+            // options: {
+            //   compilerOptions: {
+            //     preserveWhitespace: false
+            //   },
+            // }
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name][hash].[ext]',
+          outputPath: path.join(__dirname, 'dist/public/images'),
+          esModule: false,
+        },
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-        query: {compact: false},  // 開發中不需要優化所以這樣設定
+        options: {
+          presets: ['@babel/preset-env']
+        }
       },
       {
         test: /\.scss|\.css$/,
         use: [
-          'vue-style-loader',
+          'style-loader',
           'css-loader',
           'postcss-loader',
           'sass-loader',
@@ -102,29 +127,21 @@ const clientConfig = {
           },
         ]
       },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name][hash].[ext]',
-          outputPath: path.join(__dirname, 'dist/public/images'),
-          esModule: false,
-        },
-      }
     ],
   },
-  // resolve: {
-  //   extensions: [ '.tsx', '.ts', '.js' ],
-  // },
-  plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: path.join(__dirname, 'src/client/views'), to: path.join(__dirname, 'dist/views') },
-        { from: path.join(__dirname, 'src/client/static'), to: path.join(__dirname, 'dist/public') },
-      ]
-    }),
-    new VueLoaderPlugin()
-  ],
+  resolve: {
+    alias: {
+      '@@': path.resolve('./src/client')
+    },
+    extensions: [
+      ".webpack.js",
+      ".web.js",
+      ".js",
+      // 上面是預設值
+      ".vue",
+      ".scss",
+    ]
+  },
   optimization: {
     minimize: true,
   }

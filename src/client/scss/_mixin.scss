@@ -1,0 +1,5 @@
+
+@mixin fontStyle($fontPick) {
+  font-size: nth(map-get($fontStyleName, $fontPick), 1);
+  font-weight: nth(map-get($fontStyleName, $fontPick), 2);
+}
