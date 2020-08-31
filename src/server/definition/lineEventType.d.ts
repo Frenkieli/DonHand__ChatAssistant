@@ -11,9 +11,10 @@ interface lineMessageEventType {
   image: Function,
 }
 
-type lineMessageCommandEventName = 'h' | 'y2' | 'meme' | 'jpg' | 'air';
+type lineMessageCommandEventName = 'h' | 'doro' | 'y2' | 'meme' | 'jpg' | 'air';
 interface lineMessageCommandEventType {
   h: Function,
+  doro: Function,
   y2: Function,
   meme: Function,
   delme: Function,

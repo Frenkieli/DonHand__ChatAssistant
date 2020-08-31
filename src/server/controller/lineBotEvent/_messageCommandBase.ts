@@ -29,12 +29,27 @@ export default class LineMessageCommand extends LineBase {
       replyMessage = [
         { type: 'text', text: '目前可用指令如下' },
         { type: 'text', text: 
-        '.y2 XXX，回覆youtube的搜尋結果' + '\n\n' 
+        '.doro，抽一張撲克牌' + '\n\n' 
+        + '.y2 XXX，回覆youtube的搜尋結果' + '\n\n' 
         + '.air XXX，取得對應縣市的空汙資料' + '\n\n' 
         + '.meme XXX，建立XXX.jpg的梗圖' + '\n\n' 
         + '.delme XXX，刪除XXX.jpg的梗圖' + '\n\n' 
         + 'XXX.jpg，要求機器人回傳對應的梗圖'}
       ];
+      resolve(replyMessage);
+    })
+  }
+  
+  public onTextMessageDrawCard (message: string): Promise<replyMessage>{
+    const vm = this;
+    let replyMessage: replyMessage = null;
+    return new Promise((resolve, rejects) => {
+      let suit = ['spade', 'heart', 'diamond', 'club'];
+      replyMessage = [{
+        type: 'image',
+        originalContentUrl:  vm.config.serverIP + 'images/poker/' + suit[Math.floor(Math.random() * 4)] + (Math.floor(Math.random() * 13 ) + 1) + '.jpg',
+        previewImageUrl:  vm.config.serverIP + 'images/poker/' + suit[Math.floor(Math.random() * 4)] + (Math.floor(Math.random() * 13 ) + 1) + '.jpg'
+      }];
       resolve(replyMessage);
     })
   }

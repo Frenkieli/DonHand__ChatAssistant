@@ -55,6 +55,7 @@ class LineMessage extends messageCommandBase {
     return new Promise(async (resolve, rejects) => {
       const commandHandleEvent: lineMessageCommandEventType = {
         h: vm.onTextMessageHelp.bind(vm),
+        doro: vm.onTextMessageDrawCard.bind(vm),
         y2: vm.onTextMessageYoutube.bind(vm),
         meme: vm.onTextMessageMeme.bind(vm),
         delme: vm.onTextMessageDelme.bind(vm),
@@ -62,7 +63,7 @@ class LineMessage extends messageCommandBase {
         air: vm.onTextMessageAirQuality.bind(vm),
       }
       if(commandHandleEvent[keyWord]){
-        if ((message.length === 0 || !regex.test(message)) && keyWord !== 'h') {
+        if ((message.length === 0 || !regex.test(message)) && keyWord !== 'h' && keyWord !== 'doro') {
           replyMessage = { type: 'text', text: '想了想時在看不懂，抱歉～' }
           resolve(replyMessage);
         }else{
