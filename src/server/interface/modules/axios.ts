@@ -35,7 +35,8 @@ class AxiosItem {
       url: url,
       method: method,
       headers: header,
-      data: data
+      data: data,
+      timeout: 30 * 1000
     });
   }
   static get(url: string, data : object | null = null, header : object = {}) {

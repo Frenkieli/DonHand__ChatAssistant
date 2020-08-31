@@ -244,7 +244,12 @@ export default class LineMessageCommand extends LineBase {
       };
       if(string[message]){
         getAirData(message).then(result=>{
-          replyMessage = lineTempMaker.airMaker(result[0] as Array<weatherLocationElementObject>, result[1] as Array<airLocationObject>, message)
+          console.log(result[0],result[1]);
+          if(result[0] && result[1]){
+            replyMessage = lineTempMaker.airMaker(result[0] as Array<weatherLocationElementObject>, result[1] as Array<airLocationObject>, message)
+          }else{
+            replyMessage = { type: 'text', text: '天氣與空氣品質資料更新中，請稍後在試。'};
+          }
           resolve(replyMessage)
         })
       }else{

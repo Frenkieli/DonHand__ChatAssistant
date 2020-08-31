@@ -67,6 +67,8 @@ class AirData{
     Promise.all([vm.getAirQualityData(), vm.getWeatherData()]).then((res :any)=>{
       vm.airData = res[0];
       vm.weatherData = res[1];
+    }).catch(e=>{
+      vm.toGetAirData();
     })
   }
 }
