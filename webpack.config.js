@@ -35,14 +35,14 @@ const serverConfig = {
       },
     ],
   },
-  // plugins: [
-  //   new CopyPlugin({
-  //     patterns: [
-  //       { from: path.join(__dirname, 'src/client/views'), to: path.join(__dirname, 'dist/views') },
-  //       { from: path.join(__dirname, 'src/client/static'), to: path.join(__dirname, 'dist/public') },
-  //     ]
-  //   })
-  // ],
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: path.join(__dirname, 'src/client/views'), to: path.join(__dirname, 'dist/views') },
+        { from: path.join(__dirname, 'src/client/static'), to: path.join(__dirname, 'dist/public') },
+      ]
+    })
+  ],
   optimization: {
     minimize: true,
   },
@@ -67,17 +67,11 @@ const clientConfig = {
     'index': path.join(__dirname, 'src/client/main.js')
   },
   output: {
-    path: path.join(__dirname, 'dist/public/javascripts'),
-    filename: '[name].bundle.js',
+    path: path.join(__dirname, 'dist/public'),
+    filename: './javascripts/[name].bundle.js',
   },
   plugins: [
-    new VueLoaderPlugin(),
-    new CopyPlugin({
-      patterns: [
-        { from: path.join(__dirname, 'src/client/views'), to: path.join(__dirname, 'dist/views') },
-        { from: path.join(__dirname, 'src/client/static'), to: path.join(__dirname, 'dist/public') },
-      ]
-    })
+    new VueLoaderPlugin()
   ],
   module: {   //設定你的檔案選項
     rules: [
@@ -93,15 +87,6 @@ const clientConfig = {
             // }
           }
         ]
-      },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name][hash].[ext]',
-          outputPath: path.join(__dirname, 'dist/public/images'),
-          esModule: false,
-        },
       },
       {
         test: /\.js$/,
@@ -122,10 +107,17 @@ const clientConfig = {
             loader: 'sass-resources-loader',
             options: {
               // Provide path to the file with resources
-              resources: './src/client/scss/global.scss',
+              resources: path.join(__dirname, 'src/client/scss/global.scss'),
             },
           },
         ]
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: './images/' + '[name][hash].[ext]'
+        },
       },
     ],
   },

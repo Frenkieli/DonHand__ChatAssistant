@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <img class="container_img" src="./assets/images/lineBotQrcode.png" alt="lineBotQrcode">
+    <p>用line加入好友的</p>
+    <p>行動條碼功能去掃條碼</p>
+    <p>
+      DonHand_ChatAssistant
+    </p>
     hello {{state.message}}
     <div>count: {{count}}</div>
     <div>doubleCount: {{doubleCount}}</div>
@@ -45,6 +51,9 @@ export default {
 <style lang="scss" scoped>
 
 body {
+  p{
+    line-height: 20px;
+  }
   .container {
     @include fontStyle('text');
     width: 250px;
@@ -54,6 +63,11 @@ body {
     line-height: 2;
     text-align: center;
     margin: 100px auto;
+    &_img{
+      width: 100%;
+      vertical-align: middle;
+      margin-bottom: -16px;
+    }
   }
   .button{
     cursor: pointer;
