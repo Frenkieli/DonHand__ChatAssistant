@@ -29,7 +29,7 @@ export default class LineMessageCommand extends LineBase {
       replyMessage = [
         { type: 'text', text: '目前可用指令如下' },
         { type: 'text', text: 
-        '.y2b XXX，回覆youtube的搜尋結果' + '\n\n' 
+        '.y2 XXX，回覆youtube的搜尋結果' + '\n\n' 
         + '.air XXX，取得對應縣市的空汙資料' + '\n\n' 
         + '.meme XXX，建立XXX.jpg的梗圖' + '\n\n' 
         + '.delme XXX，刪除XXX.jpg的梗圖' + '\n\n' 
@@ -40,7 +40,7 @@ export default class LineMessageCommand extends LineBase {
   }
 
   /**
-   * @description command .y2b event
+   * @description command .y2 event
    * @author frenkie
    * @date 2020-08-12
    * @param {string} message

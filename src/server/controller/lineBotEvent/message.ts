@@ -51,11 +51,11 @@ class LineMessage extends messageCommandBase {
       keyWord = messageSplit.splice(0, 1)[0].replace('.', '').toLocaleLowerCase() as lineMessageCommandEventName;
       message = messageSplit.join(' ').trim();
     } 
-    const regex = new RegExp("^[\u4e00-\u9fa5_a-zA-Z0-9_ ]*$");
+    const regex = new RegExp("^[\u4e00-\u9fa5\u0800-\u4e00_a-zA-Z0-9_ ]*$");
     return new Promise(async (resolve, rejects) => {
       const commandHandleEvent: lineMessageCommandEventType = {
         h: vm.onTextMessageHelp.bind(vm),
-        y2b: vm.onTextMessageYoutube.bind(vm),
+        y2: vm.onTextMessageYoutube.bind(vm),
         meme: vm.onTextMessageMeme.bind(vm),
         delme: vm.onTextMessageDelme.bind(vm),
         jpg: vm.onTextMessageMemeJpg.bind(vm),
@@ -63,7 +63,7 @@ class LineMessage extends messageCommandBase {
       }
       if(commandHandleEvent[keyWord]){
         if ((message.length === 0 || !regex.test(message)) && keyWord !== 'h') {
-          replyMessage = { type: 'text', text: '不好意思，我只看得懂中英文ㄟ，抱歉。' }
+          replyMessage = { type: 'text', text: '想了想時在看不懂，抱歉～' }
           resolve(replyMessage);
         }else{
           let result : replyMessage = await commandHandleEvent[keyWord](message, event);
