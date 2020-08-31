@@ -50,7 +50,7 @@ class LineMessage extends messageCommandBase {
       let messageSplit = message.split(' ');
       keyWord = messageSplit.splice(0, 1)[0].replace('.', '').toLocaleLowerCase() as lineMessageCommandEventName;
       message = messageSplit.join(' ').trim();
-    }
+    } 
     const regex = new RegExp("^[\u4e00-\u9fa5_a-zA-Z0-9_ ]*$");
     return new Promise(async (resolve, rejects) => {
       const commandHandleEvent: lineMessageCommandEventType = {
