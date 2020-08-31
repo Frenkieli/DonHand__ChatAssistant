@@ -52,7 +52,8 @@ export default class LineMessageCommand extends LineBase {
     let replyMessage: replyMessage = null;
     return new Promise((resolve, rejects) => {
       var request = require('request');
-      let url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=8&q=' + encodeURI(message) + '&type=video&videoCategoryId=10&key=' + this.config.googleApiKey;
+      // let url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=8&q=' + encodeURI(message) + '&type=video&videoCategoryId=10&key=' + this.config.googleApiKey;
+      let url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=8&q=' + encodeURI(message) + '&type=video&key=' + this.config.googleApiKey;
       console.log(url)
       var options = {
         'method': 'GET',
@@ -98,16 +99,32 @@ export default class LineMessageCommand extends LineBase {
             "footer": {
               "type": "box",
               "layout": "vertical",
-              "contents": [
-                {
-                  "type": "button",
-                  "action": {
-                    "type": "uri",
-                    "label": "前往",
-                    "uri": "https://www.youtube.com/watch?v=" + v.id.videoId
-                  },
-                  "style": "primary",
-                  "height": "sm"
+              "contents": [{
+                  "type": "box",
+                  "layout": "horizontal",
+                  "contents": [
+                    {
+                      "type": "button",
+                      "action": {
+                        "type": "message",
+                        "label": "點播",
+                        "text": "https://www.youtube.com/watch?v=" + v.id.videoId
+                      },
+                      "style": "primary",
+                      "height": "sm"
+                    },
+                    {
+                      "type": "button",
+                      "action": {
+                        "type": "uri",
+                        "label": "前往",
+                        "uri": "https://www.youtube.com/watch?v=" + v.id.videoId
+                      },
+                      "style": "primary",
+                      "height": "sm"
+                    }
+                  ],
+                  "spacing": "xxl"
                 }
               ]
             }
