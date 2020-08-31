@@ -44,11 +44,11 @@ class LineMessage extends messageCommandBase {
     let message: string = event.message.text;
     let keyWord: lineMessageCommandEventName;
     if (message.slice(message.length - 4, message.length) === '.jpg') {
-      keyWord = message.slice(message.length - 4, message.length).replace('.', '') as lineMessageCommandEventName;
+      keyWord = message.slice(message.length - 4, message.length).replace('.', '').toLocaleLowerCase() as lineMessageCommandEventName;
       message = message.slice(0, message.length - 4).trim();
     } else if(message.slice(0, 1) === '.' && message.slice(0, 4) !== '.jpg') {
       let messageSplit = message.split(' ');
-      keyWord = messageSplit.splice(0, 1)[0].replace('.', '') as lineMessageCommandEventName;
+      keyWord = messageSplit.splice(0, 1)[0].replace('.', '').toLocaleLowerCase() as lineMessageCommandEventName;
       message = messageSplit.join(' ').trim();
     }
     const regex = new RegExp("^[\u4e00-\u9fa5_a-zA-Z0-9_ ]*$");
