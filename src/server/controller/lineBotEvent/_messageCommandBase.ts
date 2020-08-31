@@ -237,35 +237,70 @@ export default class LineMessageCommand extends LineBase {
       message = message.replace('台', '臺');
       let string : any = {
         '宜蘭縣' : '宜蘭縣',
+        '宜蘭' : '宜蘭縣',
         '花蓮縣' : '花蓮縣',
+        '花蓮' : '花蓮縣',
         '金門縣' : '金門縣',
+        '金門' : '金門縣',
         '南投縣' : '南投縣',
+        '南投' : '南投縣',
         '屏東縣' : '屏東縣',
+        '屏東' : '屏東縣',
+        '苗栗國' : '苗栗縣',
+        '苗栗' : '苗栗縣',
         '苗栗縣' : '苗栗縣',
         '桃園市' : '桃園市',
+        '桃園' : '桃園市',
         '高雄市' : '高雄市',
+        '高雄' : '高雄市',
         '基隆市' : '基隆市',
+        '基隆' : '基隆市',
         '連江縣' : '連江縣',
+        '連江' : '連江縣',
         '雲林縣' : '雲林縣',
+        '雲林' : '雲林縣',
         '新北市' : '新北市',
+        '新北' : '新北市',
         '新竹市' : '新竹市',
+        '新竹' : '新竹市',
         '新竹縣' : '新竹縣',
         '嘉義市' : '嘉義市',
+        '嘉義' : '嘉義市',
         '嘉義縣' : '嘉義縣',
         '彰化縣' : '彰化縣',
+        '彰化' : '彰化縣',
         '臺中市' : '臺中市',
+        '臺中' : '臺中市',
         '臺北市' : '臺北市',
+        '臺北' : '臺北市',
+        '天龍國' : '臺北市',
         '臺東縣' : '臺東縣',
+        '臺東' : '臺東縣',
         '臺南市' : '臺南市',
-        '澎湖縣' : '澎湖縣'
+        '臺南' : '臺南市',
+        '澎湖縣' : '澎湖縣',
+        '澎湖' : '澎湖縣'
       };
       if(string[message]){
-        getAirData(message).then(result=>{
+        getAirData(string[message]).then(result=>{
           console.log(result[0],result[1]);
           if(result[0] && result[1]){
-            replyMessage = lineTempMaker.airMaker(result[0] as Array<weatherLocationElementObject>, result[1] as Array<airLocationObject>, message)
+            replyMessage = lineTempMaker.airMaker(result[0] as Array<weatherLocationElementObject>, result[1] as Array<airLocationObject>, message, )
+            if(message === '苗栗國' && Array.isArray(replyMessage)){
+              if(Math.floor(Math.random() * 2) === 0){
+                replyMessage.push({
+                  type: 'text', text: '與該國建立之衛星連線即將斷開...'
+                })
+              }else{
+                replyMessage = { type: 'text', text: '連線遭到該國反動份子攔截，與該國建立之衛星連線已斷開...' };
+              }
+            }
           }else{
-            replyMessage = { type: 'text', text: '天氣與空氣品質資料更新中，請稍後在試。'};
+            if(message === '苗栗國'){
+              replyMessage = { type: 'text', text: '正在與該國建立衛星連線...'};
+            }else{
+              replyMessage = { type: 'text', text: '天氣與空氣品質資料更新中，請稍後在試。'};
+            }
           }
           resolve(replyMessage)
         })

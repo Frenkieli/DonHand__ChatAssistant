@@ -5,7 +5,7 @@
  */
 export default class LineFlexTempMaker {
   constructor() { }
-  static airMaker(weatherData: Array<weatherLocationElementObject>, airQualityData: Array<airLocationObject>,local: string): replyMessage {
+  static airMaker(weatherData: Array<weatherLocationElementObject>, airQualityData: Array<airLocationObject>, local: string): replyMessage {
     let replyMessage: replyMessage;
     let replyContent: Array<object> = [];
     for (let i = 0; i < airQualityData.length; i++) {
@@ -86,7 +86,7 @@ export default class LineFlexTempMaker {
               },
               {
                 "type": "text",
-                "text": v.County,
+                "text": local,
                 "align": "end",
                 "weight": "bold",
                 "size": "md",
@@ -210,14 +210,14 @@ export default class LineFlexTempMaker {
       replyContent.push(airTemp);
     }
     if (replyContent.length <= 10) {
-      replyMessage = {
+      replyMessage = [{
         type: "flex",
         altText: local + "的空汙結果",
         contents: {
           type: "carousel",
           contents: replyContent
         }
-      }
+      }]
     } else {
       replyMessage = [{
         type: "flex",
