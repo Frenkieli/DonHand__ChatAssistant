@@ -45,10 +45,12 @@ export default class LineMessageCommand extends LineBase {
     let replyMessage: replyMessage = null;
     return new Promise((resolve, rejects) => {
       let suit = ['spade', 'heart', 'diamond', 'club'];
+      let suitType = suit[Math.floor(Math.random() * 4)];
+      let cardNumber = Math.floor(Math.random() * 13 ) + 1;
       replyMessage = [{
         type: 'image',
-        originalContentUrl:  vm.config.serverIP + 'images/poker/' + suit[Math.floor(Math.random() * 4)] + (Math.floor(Math.random() * 13 ) + 1) + '.jpg',
-        previewImageUrl:  vm.config.serverIP + 'images/poker/' + suit[Math.floor(Math.random() * 4)] + (Math.floor(Math.random() * 13 ) + 1) + '.jpg'
+        originalContentUrl:  vm.config.serverIP + 'images/poker/' + suitType + cardNumber + '.jpg',
+        previewImageUrl:  vm.config.serverIP + 'images/poker/' + suitType + cardNumber + '.jpg'
       }];
       resolve(replyMessage);
     })

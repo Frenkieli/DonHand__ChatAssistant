@@ -64,7 +64,7 @@ class LineMessage extends messageCommandBase {
       }
       if(commandHandleEvent[keyWord]){
         if ((message.length === 0 || !regex.test(message)) && keyWord !== 'h' && keyWord !== 'doro') {
-          replyMessage = { type: 'text', text: '想了想時在看不懂，抱歉～' }
+          replyMessage = { type: 'text', text: '想了想實在看不懂，抱歉～' }
           resolve(replyMessage);
         }else{
           let result : replyMessage = await commandHandleEvent[keyWord](message, event);
