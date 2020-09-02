@@ -3,6 +3,7 @@
     <img class="container_img" src="./assets/images/lineBotQrcode.png" alt="lineBotQrcode">
     <p>用line加入好友的</p>
     <p>行動條碼功能去掃條碼</p>
+    <router-view/>
     <p>
       DonHand_ChatAssistant
     </p>
@@ -15,24 +16,10 @@
 </template>
 
 <script>
-import { computed, ref, reactive } from 'vue';
+import { addNumber } from './composition/addNumber'
 export default {
   setup () {  
-    // asdfasffasdf
-    const count = ref(0)
-
-    const state = reactive({
-      message: 'Vue3'
-    })
-
-    const doubleCount = computed(() => count.value * 2)
-
-    const increment = e => {
-      console.log(e)
-      count.value += 10
-      state.message = 'Vue3. GoGoGo!'
-    }
-
+    const { count, state, doubleCount, increment } = addNumber();
     return {
       count,
       state,
