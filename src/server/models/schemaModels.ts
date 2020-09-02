@@ -22,10 +22,12 @@ const lineUserSchema = new mongoose.Schema({
 lineUserSchema.index({userId: 1});
 
 const memeImagesSchema = new mongoose.Schema({
+  _id: { type: String, required: true },
   userId: { type: String, required: true },
   memeName: { type: String, required: true },
   fileUrl: { type: String, required: true },
   deletehash: { type: String, required: true },
+  counter: { type: Number, required: true },
   time: { type: Number, required: true, default: moment().valueOf() },
 }, {
   timestamps: { updatedAt: 'updateTime' }

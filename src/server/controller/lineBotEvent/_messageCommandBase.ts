@@ -173,7 +173,7 @@ export default class LineMessageCommand extends LineBase {
     const vm = this;
     let replyMessage: replyMessage = null;
     return new Promise(async (resolve, rejects) => {
-      let checkMemeResult = await vm.db.findOneQuery('memeImages', { memeName: message });
+      let checkMemeResult = globalAny.memeImages[message];
       if (!checkMemeResult) {
         replyMessage = { type: 'text', text: '請為"' + message + '.jpg"上傳對應的圖片，這張圖片每個人都看的到！注意不要上傳私人照片或是為違法照片。' };
         globalAny.lineUserStates[event.source.userId] = {
@@ -200,13 +200,13 @@ export default class LineMessageCommand extends LineBase {
     const vm = this;
     let replyMessage: replyMessage = null;
     return new Promise(async (resolve, rejects) => {
-      let checkMemeResult = await vm.db.findOneQuery('memeImages', { memeName: message });
+      let checkMemeResult = globalAny.memeImages[message];
       if (checkMemeResult) {
         console.log(checkMemeResult.deletehash, 'checkMemeResult')
         axiosItem.delete('https://api.imgur.com/3/image/' + checkMemeResult.deletehash, null, {
           Authorization: 'Client-ID ' + vm.config.imgur.clientID
         }).then(()=>{
-          vm.db.remove('memeImages', { _id: checkMemeResult._id });
+          delete globalAny.memeImages[message];
           replyMessage = [
             { type: 'text', text: message + '.jpg"已經刪除囉！注意該圖片如果已經被讀取，會暫時保留在line的暫存檔中，如不放心可以到此網址確認該圖片已經被刪除。' },
             { type: 'text', text: checkMemeResult.fileUrl }
@@ -231,7 +231,7 @@ export default class LineMessageCommand extends LineBase {
     const vm = this;
     let replyMessage: replyMessage = null;
     return new Promise(async (resolve, rejects) => {
-      let memeResult = await vm.db.findOneQuery('memeImages', { memeName: message }) as any;
+      let memeResult = globalAny.memeImages[message];
       console.log(memeResult, 'memeResult')
       if (memeResult) {
         replyMessage = {
@@ -239,6 +239,7 @@ export default class LineMessageCommand extends LineBase {
           originalContentUrl: memeResult.fileUrl,
           previewImageUrl: memeResult.fileUrl
         }
+        globalAny.memeImages[message].counter += 1;
         resolve(replyMessage);
       } else {
         replyMessage = { type: 'text', text: '"' + message + '.jpg"不存在喔！為我們新增？' };

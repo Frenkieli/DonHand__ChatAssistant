@@ -63,7 +63,13 @@ app.use(function (err : any, req : any, res : any, next : any) {
   res.render('error');
 });
 // 使用者狀態存在快取內，不要跟資料庫作以免有過多的溝通
+// 系統排程
+import scheduleStart from '@@/server/schedules/systemSchedules';
+
 const globalAny:any = global;
 globalAny.lineUserStates = {};
+globalAny.memeImages = {};
+
+scheduleStart();
 
 export default app;

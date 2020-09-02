@@ -6,6 +6,7 @@ interface SchemaMode {
 }
 
 interface mongoDB {
+    findQuery: Function,
     findOneQuery: Function,
     create: Function,
     findOneAndUpdate: Function,

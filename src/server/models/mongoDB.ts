@@ -7,6 +7,29 @@ import schemaModels from '@@models/schemaModels';
 import moment from 'moment';
 import mongoose from 'mongoose';
 import config from '@@config/config';
+/**
+ * @description find data with query
+ * @author frenkie
+ * @date 2020-09-02
+ * @param {String} CollectionName
+ * @param {Object} query
+ * @returns 
+ */
+function findQuery(CollectionName: CollectionName, query: object = {}){
+  return new Promise(function (resolve, reject) {
+    const dbModel = schemaModels[CollectionName];
+    if (dbModel) {
+      dbModel.find(query, function (err: any, docs: any) {
+        resolve(checkDocs(err, docs));
+      });
+    } else {
+      reject(null)
+    };
+  }).catch(err => {
+    console.error(err);
+  })
+}
+
 
 /**
  * @description find one data with query
@@ -152,6 +175,7 @@ function remove(CollectionName: CollectionName, findObject: object) {
 }
 
 let mongoDBItem : mongoDB = {
+  findQuery,
   findOneQuery,
   create,
   findOneAndUpdate,

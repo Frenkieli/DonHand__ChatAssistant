@@ -8,6 +8,7 @@ const fs = require("fs");
 
 const globalAny: any = global;
 
+const ObjectID = require('mongodb').ObjectID;
 class LineMessage extends messageCommandBase {
   /**
    * @description line message receive event
@@ -121,12 +122,16 @@ class LineMessage extends messageCommandBase {
               // },
               { type: 'text', text: lineUserStates.memeName + '.jpg"上傳完成' }
             ]
-            vm.db.create('memeImages', {
+            let data = {
+              _id: new ObjectID,
               userId: event.source.userId,
               memeName: lineUserStates.memeName,
               fileUrl: imgurData.link,
-              deletehash: imgurData.deletehash
-            })
+              deletehash: imgurData.deletehash,
+              counter: 0
+            }
+            vm.db.create('memeImages', data);
+            globalAny.memeImages[data.memeName] = data;
             resolve(replyMessage);
           })
         }).catch(err => {
