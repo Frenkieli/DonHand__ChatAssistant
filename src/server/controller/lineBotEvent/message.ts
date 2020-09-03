@@ -88,8 +88,8 @@ class LineMessage extends messageCommandBase {
     return new Promise((resolve, reject) => {
       const vm = this;
       let replyMessage: replyMessage = null;
-      if (globalAny.lineUserStates[event.source.userId] && globalAny.lineUserStates[event.source.userId].type === 'meme') {
-        let lineUserStates = globalAny.lineUserStates[event.source.userId];
+      let lineUserStates = globalAny.lineUserStates[event.source.userId];
+      if (globalAny.lineUserStates[event.source.userId] && globalAny.lineUserStates[event.source.userId].type === 'meme' && !globalAny.memeImages[lineUserStates.memeName]) {
         delete globalAny.lineUserStates[event.source.userId];
         let imageName = 'meme-' + event.source.userId + '-' + (Math.floor(Math.random() * 99999));
         // 這邊不處理線下的圖片的原因是會消耗效能，因為heroku的設定會定期將非本體的檔案清除所以並不需要另外浪費效能去作這件事
@@ -140,6 +140,9 @@ class LineMessage extends messageCommandBase {
           delete globalAny.lineUserStates[event.source.userId];
           resolve(replyMessage);
         })
+      }else{
+        delete globalAny.lineUserStates[event.source.userId];
+        replyMessage = { type: 'text', text: '梗圖"' + globalAny.lineUserStates[event.source.userId].memeName + '.jpg"上傳發生了未知的錯誤' };
       }
     })
   }
