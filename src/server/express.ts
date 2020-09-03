@@ -9,7 +9,7 @@ import express from 'express';
 import path from 'path';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
-
+const history = require('connect-history-api-fallback');
 
 
 
@@ -21,7 +21,9 @@ import lineBotRoutes from '@@routes/lineBot';
 
 
 const app = express();
-
+app.use(history({
+  index: '/',
+}));
 // app.use(express.json()); line的訊息必須在他上面去作解析不然會跳錯
 app.use('/lineBot', lineBotRoutes);
 

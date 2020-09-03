@@ -38,7 +38,7 @@ const serverConfig = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: path.join(__dirname, 'src/client/views'), to: path.join(__dirname, 'dist/views') },
+        { from: path.join(__dirname, 'src/server/views'), to: path.join(__dirname, 'dist/views') },
         { from: path.join(__dirname, 'src/client/static'), to: path.join(__dirname, 'dist/public') },
       ]
     })
@@ -116,7 +116,7 @@ const clientConfig = {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
-          name: './images/' + '[name][hash].[ext]'
+          name: '/images/' + '[name][hash].[ext]'
         },
       },
     ],
