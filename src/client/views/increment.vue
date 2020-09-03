@@ -31,19 +31,19 @@ export default {
 </script>
 <style lang="scss" scoped>
 
-body {
   p{
     line-height: 20px;
   }
   .container {
     @include fontStyle('text');
-    width: 250px;
+    box-sizing: border-box;
+    width: 310px;
     border-radius: 20px;
     padding: 30px;
     border: 1px solid #333;
     line-height: 2;
     text-align: center;
-    margin: 100px auto;
+    margin: 0 auto;
     &_img{
       width: 100%;
       vertical-align: middle;
@@ -65,5 +65,4 @@ body {
       background-color: map-get($map: $color, $key: 'string');
     }
   }
-}
 </style>

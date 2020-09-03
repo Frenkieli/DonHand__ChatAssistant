@@ -9,12 +9,11 @@
 </template>
 <style>
   .lightbox{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50% , -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin: auto;
-    width: 95%;
     max-width: 600px;
   }
   .lightbox img{
