@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 
+import introduction from '../views/introduction.vue'
 import increment from '../views/increment.vue'
 import TermsOfUse from '../views/TermsOfUse.vue'
 import PageNotFound from '../views/PageNotFound.vue'
@@ -7,8 +8,8 @@ import PageNotFound from '../views/PageNotFound.vue'
 const routes = [
   {
     path: '/',
-    name: 'increment',
-    component: increment,
+    name: 'introduction',
+    component: introduction,
     
   },
   {
@@ -48,7 +49,24 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   // history: createWebHashHistory(),
-  routes
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return { left: savedPosition.left, top: savedPosition.top }
+    }else if (to.hash) {
+      let element = document.getElementById(to.hash.replace('#',''));
+      let top = element.offsetTop;
+      let left = element.offsetLeft;
+      console.log(top, 'top');
+      return {
+        left: left,
+        top: top,
+      }
+    }else {
+      return { left: 0, top: 0 }
+    }
+  }
 })
+
 
 export default router;
