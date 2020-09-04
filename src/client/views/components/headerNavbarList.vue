@@ -8,13 +8,19 @@
 <template>
   <ul class="header_navbar_list">
     <li
-      v-for="value in navList"
+      v-for="{name, link, navList} in navList"
       class="header_navbar_list_item"
-      :key="value.name"
+      :key="name"
     >
-      <span class="header_navbar_list_item_span">{{ value.name }}</span>
+      <router-link 
+        :to=" '/' + link"
+        custom
+        v-slot="{ navigate, isActive, isExactActive }"
+      >
+        <a class="header_navbar_list_item_span" @click="navigate" :class="{ active: isActive, 'exact-active': isExactActive }">{{ name }}</a>
+      </router-link>
       <headerNavbarList
-        :navList="value.navList"
+        :navList="navList"
       />
     </li>
   </ul>

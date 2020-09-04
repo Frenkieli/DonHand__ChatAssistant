@@ -12,6 +12,22 @@ const routes = [
     
   },
   {
+    path: "/chatroom",
+    name: "chatroom",
+    component: increment,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/reference",
+    name: "reference",
+    component: TermsOfUse,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
     path: "/TermsOfUse",
     name: "TermsOfUse",
     component: TermsOfUse,

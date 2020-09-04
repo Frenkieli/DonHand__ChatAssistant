@@ -77,29 +77,29 @@ export default {
     const navList = [
       {
         name: "基本介紹",
-        link: '/',
+        link: '',
         navList: [
           {
             name: "作者",
-            link: '/#author'
+            link: '#author'
           },
           {
             name: "理念",
-            link: '/#idea'
+            link: '#idea'
           },
         ],
       },
       {
         name: "試用功能",
-        link: '/chatroom'
+        link: 'chatroom'
       },
       {
         name: "學習參考",
-        link: '/reference',
+        link: 'reference',
         navList: [
           {
             name: "typescript",
-            link: '/reference#typescript',
+            link: 'reference#typescript',
             navList: [
               {
                 name: "立即前往",
@@ -122,13 +122,13 @@ export default {
           },
           {
             name: "express",
-            link: '/reference#express',
+            link: 'reference#express',
           },
         ],
       },
       {
         name: "使用條款",
-        link: '/TermsOfUse',
+        link: 'TermsOfUse',
       },
     ];
 
