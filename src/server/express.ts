@@ -9,7 +9,7 @@ import express from 'express';
 import path from 'path';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
-const history = require('connect-history-api-fallback');
+import history from 'connect-history-api-fallback';
 
 
 
