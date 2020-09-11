@@ -42,6 +42,16 @@
                   <img src="https://picsum.photos/500/400/?random=6" />
                 </div>
               </div>
+              <div class="whirlShow__card whirlShow__card7">
+                <div class="whirlShow__card__container">
+                  <img src="https://picsum.photos/100/400/?random=7" />
+                </div>
+              </div>
+              <div class="whirlShow__card whirlShow__card8">
+                <div class="whirlShow__card__container">
+                  <img src="https://picsum.photos/500/200/?random=8" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -67,13 +77,6 @@ export default {
 .class {
   height: 100vh;
 }
-.section {
-  padding: 50px 0;
-  .container {
-    max-width: 1200px;
-    margin: auto;
-  }
-}
 @keyframes whirlShow-carousel {
   0% {
     transform: rotate(0deg);
@@ -82,10 +85,18 @@ export default {
     transform: rotate(360deg);
   }
 }
+@keyframes whirlShow-carousel-item-neutralize {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100%{
+    transform: rotateY(360deg);
+  }
+}
 .whirlShow {
   width: 100%;
   height: 80vh;
-  background-color: #ccc;
+  // background-color: #ccc;
   perspective: 2000; // 這個要動態
   perspective-origin: center;
   // overflow: hidden;
@@ -95,12 +106,14 @@ export default {
     transform: rotateX(90deg) translateZ(-375px);
     transform-style: preserve-3d;
     &-carouselbase{
-      background-color: #ffc;
+      border-radius: 50%;
+      // background-color: #ffc;
+      background-image: url('../assets/images/startfloor.png');
       width: 100%;
-      height: 100%;
+      padding-bottom: 100%;
       transform: rotate(0deg);
       transform-style: preserve-3d;
-      // animation: whirlShow-carousel 10s infinite;
+      animation: whirlShow-carousel 10s infinite linear;
     }
   }
   &__card {
@@ -109,28 +122,36 @@ export default {
     left: 50%;
     box-sizing: border-box;
     width: 300px;
-    height: 300px;
-    border: 1px solid #d00;
+    height: 380px;
+    transform-style: preserve-3d;
+    // border: 1px solid #f00;
     &1{
-      transform: translate(-50%, -50%) rotate(0deg) translate(150px) rotateX(-90deg) translateY(-100%) rotate(-0deg);
+      transform: translate(-50%, -50%) rotate(0deg) translateY(400px) rotate(-0deg) rotateX(-90deg) translateY(-100%);
     }
     &2{
-      transform: translate(-50%, -50%) rotate(60deg) translate(150px) rotateX(-90deg) translateY(-100%) rotate(-60deg);
+      transform: translate(-50%, -50%) rotate(45deg) translateY(400px) rotate(-45deg) rotateX(-90deg) translateY(-100%);
     }
     &3{
-      transform: translate(-50%, -50%) rotate(120deg) translate(150px) rotateX(-90deg) translateY(-100%) rotate(-120deg);
+      transform: translate(-50%, -50%) rotate(90deg) translateY(400px) rotate(-90deg) rotateX(-90deg) translateY(-100%);
     }
     &4{
-      transform: translate(-50%, -50%) rotate(180deg) translate(150px) rotateX(-90deg) translateY(-100%) rotate(-180deg);
+      transform: translate(-50%, -50%) rotate(135deg) translateY(400px) rotate(-135deg) rotateX(-90deg) translateY(-100%);
     }
     &5{
-      transform: translate(-50%, -50%) rotate(270deg) translate(150px) rotateX(-90deg) translateY(-100%) rotate(-270deg);
+      transform: translate(-50%, -50%) rotate(180deg) translateY(400px) rotate(-180deg) rotateX(-90deg) translateY(-100%);
     }
     &6{
-      transform: translate(-50%, -50%) rotate(360deg) translate(150px) rotateX(-90deg) translateY(-100%) rotate(-360deg);
+      transform: translate(-50%, -50%) rotate(225deg) translateY(400px) rotate(-225deg) rotateX(-90deg) translateY(-100%);
+    }
+    &7{
+      transform: translate(-50%, -50%) rotate(270deg) translateY(400px) rotate(-270deg) rotateX(-90deg) translateY(-100%);
+    }
+    &8{
+      transform: translate(-50%, -50%) rotate(315deg) translateY(400px) rotate(-315deg) rotateX(-90deg) translateY(-100%);
     }
     &__container {
       position: relative;
+      animation: whirlShow-carousel-item-neutralize 10s infinite linear;
       &::before {
         display: inline-block;
         content: "";

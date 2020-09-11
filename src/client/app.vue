@@ -25,6 +25,16 @@ body{
 }
 </style>
 
+<style lang="scss">
+.section {
+  overflow: hidden;
+  padding: 50px 0;
+  .container {
+    max-width: 1200px;
+    margin: auto;
+  }
+}
+</style>
 <style lang="scss" scoped>
 .main_header{
   position: fixed;

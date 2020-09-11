@@ -146,6 +146,7 @@ export default {
   margin: auto;
   position: relative;
   box-sizing: border-box;
+  z-index: 100;
   &_logo {
     position: absolute;
     &_img {
