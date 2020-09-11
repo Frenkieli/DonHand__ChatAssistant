@@ -40,7 +40,7 @@ heroku config:set KEY=value
 
 部屬
 git push heroku master
-
+1
 監看
 heroku logs --tail
 
