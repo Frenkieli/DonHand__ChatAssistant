@@ -14,42 +14,60 @@
             <div class="whirlShow__container-carouselbase">
               <div class="whirlShow__card whirlShow__card1">
                 <div class="whirlShow__card__container">
-                  <img src="https://picsum.photos/400/300/?random=1" />
+                  <div class="div_test">
+                    <img src="https://picsum.photos/400/300/?random=1" />
+                  </div>
                 </div>
               </div>
               <div class="whirlShow__card whirlShow__card2">
                 <div class="whirlShow__card__container">
-                  <img src="https://picsum.photos/500/400/?random=2" />
+                  <div class="div_test">
+                    <img src="https://picsum.photos/500/400/?random=2" />
+                  </div>
                 </div>
               </div>
               <div class="whirlShow__card whirlShow__card3">
                 <div class="whirlShow__card__container">
-                  <img src="https://picsum.photos/300/800/?random=3" />
+                  <div class="div_test">
+                    <img src="https://picsum.photos/300/800/?random=3" />
+                  </div>
                 </div>
               </div>
               <div class="whirlShow__card whirlShow__card4">
                 <div class="whirlShow__card__container">
-                  <img src="https://picsum.photos/800/200/?random=4" />
+                  <div class="div_test">
+                    <img src="https://picsum.photos/800/200/?random=4" />
+                  </div>
                 </div>
               </div>
               <div class="whirlShow__card whirlShow__card5">
                 <div class="whirlShow__card__container">
-                  <img src="https://picsum.photos/700/800/?random=5" />
+                  <div class="div_test">
+                    <img src="https://picsum.photos/700/800/?random=5" />
+                  </div>
                 </div>
               </div>
               <div class="whirlShow__card whirlShow__card6">
                 <div class="whirlShow__card__container">
-                  <img src="https://picsum.photos/500/400/?random=6" />
+                  <div class="div_test">
+                    <img src="https://picsum.photos/500/400/?random=6" />
+                  </div>
                 </div>
               </div>
               <div class="whirlShow__card whirlShow__card7">
                 <div class="whirlShow__card__container">
-                  <img src="https://picsum.photos/100/400/?random=7" />
+                  <div class="div_test">
+                    <img src="https://picsum.photos/100/400/?random=7" />
+                  </div>
                 </div>
               </div>
               <div class="whirlShow__card whirlShow__card8">
                 <div class="whirlShow__card__container">
-                  <img src="https://picsum.photos/500/200/?random=8" />
+                  <div class="div_test">
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam placeat quam ipsam rem, odit nihil. Minus autem exercitationem ea asperiores. Quo impedit laudantium quia sequi reprehenderit, accusamus earum consectetur eaque.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -152,24 +170,34 @@ export default {
     &__container {
       position: relative;
       animation: whirlShow-carousel-item-neutralize 10s infinite linear;
-      &::before {
-        display: inline-block;
-        content: "";
-        width: 0;
-        height: 100%;
-        vertical-align: middle;
-      }
       width: 100%;
       height: 100%;
-      display: inline-block;
-      vertical-align: middle;
-      text-align: center;
-      img {
-        max-width: 100%;
-        max-height: 100%;
-        vertical-align: middle;
-      }
     }
+  }
+}
+.div_test{
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+  vertical-align: middle;
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+  }
+  p{
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+  }
+  &::before {
+    display: inline-block;
+    content: "";
+    width: 0;
+    height: 100%;
+    vertical-align: middle;
   }
 }
 </style>
