@@ -74,9 +74,9 @@ class AirData{
 }
 
 let airData = new AirData;
-airData.toGetAirData();
-setInterval(()=>{
-  airData.toGetAirData();
-}, 60 * 60 * 1000)
+// airData.toGetAirData();
+// setInterval(()=>{
+//   airData.toGetAirData();
+// }, 60 * 60 * 1000)
 
 export default airData.getAirData.bind(airData);

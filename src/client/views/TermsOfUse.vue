@@ -8,6 +8,13 @@
     <p>如果大哥哥或大姐姐沒有跟隨過我的話，我會好好將你的外觀描述給警察叔叔也就是你的line唯一ID。這樣警察叔叔就可以跟line公司索取你的資料了喔</p>
     <p>所以阿大家，我並不擁有使用者所上傳的任何資料與著作權也不為此負責，請各位在上傳所有檔案的時候注意不要違反著作權和其他法律...一旦觸法法律也需要自己負責喔，驢驢可是有好好紀錄下來每張圖片是誰上傳的呢！所以警察叔叔來訪的時候會好好將您的資料給警察叔叔喔！</p>
     <a href="https://github.com/Frenkieli/linebot_crawler">公開程式碼</a>
+
+    使用插圖是由以下作者提供
+    <a href='https://www.freepik.com/vectors/background'>Background vector created by freepik - www.freepik.com</a>
+    <a href='https://www.freepik.com/vectors/background'>Background vector created by kotkoa - www.freepik.com</a>
+    <a href='https://www.freepik.com/vectors/background'>Background vector created by pikisuperstar - www.freepik.com</a>
+    <a href='https://www.freepik.com/vectors/background'>Background vector created by myriammira - www.freepik.com</a>
+    <a href='https://pngtree.com/so/手機'>手機 png from pngtree.com</a>
   </div>
 </template>
 

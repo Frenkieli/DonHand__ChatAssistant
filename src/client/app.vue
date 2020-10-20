@@ -1,11 +1,11 @@
 <template>
-  <headerItem class="main_header"></headerItem>
+  <!-- <headerItem class="main_header"></headerItem> -->
   <router-view
     class="main_container"
   />
   <footer class="main_footer">
     <p class="main_footer_copyright">
-      Copyright &copy; 2020 DonHand ChatAssistant.&nbsp;
+      Copyright &copy; 2020 DonHand.&nbsp;
       <a class="main_footer_copyright_link" target="_blank" title="DonHand ChatAssistant github page" href="https://github.com/Frenkieli/DonHand__ChatAssistant">
         Source code
       </a>.
@@ -18,8 +18,6 @@
 
 <script>
 import headerItem from './views/headerItem';
-
-import CanvasNest from './assets/javascripts/lib/canvas-nest-modify';
 import { ref, onMounted } from 'vue';
 
 export default {
@@ -28,18 +26,18 @@ export default {
     headerItem
   },
   setup(){
-    const config = {
-      color: '255,255,255',
-      count: 168,
-    };
-    const canvasNest = ref(null);
-    // Hooks
-    onMounted(() => {
-      console.log("canvasNest", canvasNest.value);
-      const cn = new CanvasNest(canvasNest.value, config);
-    });
+    // const config = {
+    //   color: '255,255,255',
+    //   count: 168,
+    // };
+    // const canvasNest = ref(null);
+    // // Hooks
+    // onMounted(() => {
+    //   console.log("canvasNest", canvasNest.value);
+    //   const cn = new CanvasNest(canvasNest.value, config);
+    // });
     return {
-      canvasNest
+      // canvasNest
     }
   },
 }
@@ -81,11 +79,10 @@ body{
   bottom: 0;
   left: 0;
   right: 0;
-  height: 50px;
   font-size: 12px;
   padding-bottom: 2px;
   box-sizing: border-box;
-  background-image: url('./assets/images/footer.png');
+  background-color: #333;
   background-position: bottom;
   background-size: 100% 100%;
   &::before{
@@ -134,15 +131,5 @@ body{
       }
     }
   }
-}
-
-#canvasNest{
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-  background-image: url('./assets/images/pureSky.jpg');
 }
 </style>

@@ -2,4 +2,30 @@
 @mixin fontStyle($fontPick) {
   font-size: nth(map-get($fontStyleName, $fontPick), 1);
   font-weight: nth(map-get($fontStyleName, $fontPick), 2);
+};
+// 宣告rwd斷點用
+@mixin rwd($device){
+  $rwdParameterCheck : true;
+  @each $viewpoint,$num in $breakpoint{
+    @if $device == $viewpoint{
+      $rwdParameterCheck : false;
+      @if $num == 1{
+        @media all and (max-width: #{nth($breakpointParameter, $num)}px) {
+          @content;
+        }
+      }@else if $num == length($breakpointParameter){
+        @media all and (min-width: #{nth($breakpointParameter, $num)}px) {
+          @content;
+        }
+      }@else{
+        @media all and (min-width: #{nth($breakpointParameter, $num - 1) + 1}px) and (max-width: #{nth($breakpointParameter, $num)}px) {
+          @content;
+        }
+      }
+    }
+  };
+  @if($rwdParameterCheck){
+    @debug $breakpoint;
+    @error 'invalid RWD breakpoint name："#{$device}" not exist.';
+  };
 }

@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 
+import home from '../views/home.vue'
 import introduction from '../views/introduction.vue'
 import increment from '../views/increment.vue'
 import TermsOfUse from '../views/TermsOfUse.vue'
@@ -8,8 +9,8 @@ import PageNotFound from '../views/PageNotFound.vue'
 const routes = [
   {
     path: '/',
-    name: 'introduction',
-    component: introduction,
+    name: 'home',
+    component: home,
     
   },
   {

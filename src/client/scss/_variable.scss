@@ -15,4 +15,14 @@ $color : (
 $fontStyleName: (
   title : 32px 700,
   text : 20px 400,
-)
+);
+
+// 宣告斷點參數
+$breakpoint: (
+  ssm: 1,
+  sm: 2,
+  md: 3,
+  lg: 4,
+  xl: 5
+);
+$breakpointParameter: 575 767 991 1199 1200;
