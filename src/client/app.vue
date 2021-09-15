@@ -5,7 +5,7 @@
   />
   <footer class="main_footer">
     <p class="main_footer_copyright">
-      Copyright &copy; 2020 DonHand.&nbsp;
+      Copyright &copy; 2021 DonHand.&nbsp;
       <a class="main_footer_copyright_link" target="_blank" title="DonHand ChatAssistant github page" href="https://github.com/Frenkieli/DonHand__ChatAssistant">
         Source code
       </a>.
@@ -63,6 +63,10 @@ body{
 }
 </style>
 <style lang="scss" scoped>
+// 動畫要跑多久
+$colorSoure : 0.25s;
+
+
 .main_header{
   position: fixed;
   top: 0;
@@ -94,23 +98,22 @@ body{
   }
   &_copyright{
     width: 100%;
-    font-size: 16px;
     display: inline-block;
     text-align: center;
     vertical-align: bottom;
-    $colorSoure : 0.25s;
+    font-size: 16px;
+    line-height: 18px;
     &_link{
+      position: relative;
       vertical-align: bottom;
       position: relative;
       display: inline-block;
-      transition: padding $colorSoure $colorSoure,
-                  font-size $colorSoure $colorSoure;
       color: #fff;
       text-decoration: none;
       &::after{
         content: '';
         position: absolute;
-        bottom: 0;
+        bottom: -2px;
         left: 0;
         width: 0;
         border-bottom: 0px solid transparent;
@@ -118,10 +121,7 @@ body{
                     width $colorSoure 0s;
       }
       &:hover{
-        font-size: 1.5em;
-        padding-bottom: 2px;
-        transition: padding $colorSoure 0s,
-                    font-size $colorSoure 0s;
+        transition: padding $colorSoure 0s;
         &::after{
           width: 100%;
           border-bottom: 2px solid #fff;

@@ -11,7 +11,7 @@
     <input type="checkbox" name="header_checkbox" class="displaynone" id="header_checkbox" />
     <label for="header_checkbox" class="header_navButton"></label>
     <figure class="header_logo">
-      <img class="header_logo_img" src="../assets/images/logo.png" alt="DonHand - 助手(驢驢)的logo" />
+      <img class="header_logo_img" src="../assets/images/logo.jpg" alt="DonHand - 助手(驢驢)的logo" />
       <figcaption class="displaynone">DonHand - 助手(驢驢)，一個擅長傳梗圖的linebot機器人</figcaption>
     </figure>
     <nav class="header_navbar">
